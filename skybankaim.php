@@ -689,7 +689,7 @@ class SkyBankAIM extends PaymentModule
 							<div class="col-lg-2" style="width:61px">
 								<input class="btn btn-default" type="submit" name="submitRefund" value="Submit" />
 							</div>	
-							<div class="col-lg-2" style="width:213px">
+							<div class="col-lg-2" style="width:120x">
 								<input type="submit" class="btn btn-default" name="submitFullRefund" value="Full Refund"/>	
 								
 							</div>';
