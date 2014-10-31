@@ -1,0 +1,11 @@
+[30-Oct-2014 14:11:06 US/Eastern] PHP Fatal error:  Uncaught Duplicate entry '15' for key 'id_order'<br /><br /><pre>INSERT INTO `ps_skybankaim_autoship_order` (`id_order`, `order_name`, `frequency`, `last_run_date`, `active`) VALUES ('15', 'Test', '7 ', '2014-10-30', '1')</pre>
+  thrown in /home/makeupad/public_html/16/classes/db/Db.php on line 635
+[30-Oct-2014 14:19:23 US/Eastern] PHP Notice:  Undefined index: x_card_num in /home/makeupad/public_html/16/modules/skybankaim/validation.php on line 187
+[30-Oct-2014 14:19:23 US/Eastern] PHP Notice:  Undefined index: x_exp_date_m in /home/makeupad/public_html/16/modules/skybankaim/validation.php on line 188
+[30-Oct-2014 14:19:23 US/Eastern] PHP Notice:  Undefined index: x_exp_date_y in /home/makeupad/public_html/16/modules/skybankaim/validation.php on line 188
+[30-Oct-2014 14:19:23 US/Eastern] PHP Notice:  Undefined index: name in /home/makeupad/public_html/16/modules/skybankaim/validation.php on line 189
+[30-Oct-2014 14:19:24 US/Eastern] PHP Notice:  Undefined index: x_card_num in /home/makeupad/public_html/16/modules/skybankaim/validation.php on line 208
+[30-Oct-2014 14:19:24 US/Eastern] PHP Notice:  Undefined index: x_cardType in /home/makeupad/public_html/16/modules/skybankaim/validation.php on line 209
+[30-Oct-2014 14:19:24 US/Eastern] PHP Notice:  Undefined index: name in /home/makeupad/public_html/16/modules/skybankaim/validation.php on line 210
+[30-Oct-2014 14:19:24 US/Eastern] PHP Notice:  Undefined index: x_autoShip in /home/makeupad/public_html/16/modules/skybankaim/validation.php on line 220
+[30-Oct-2014 15:51:23 US/Eastern] PHP Notice:  Undefined index: x_autoShip in /home/makeupad/public_html/16/modules/skybankaim/validation.php on line 220
