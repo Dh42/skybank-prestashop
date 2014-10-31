@@ -1535,7 +1535,7 @@ class AdminReOccurOrdersController extends ModuleAdminController
 		{
 			$module = Module::getInstanceByName($payment['name']);
 			if (Validate::isLoadedObject($module) && $module->active)
-				$payment_methods[] = "SkyBank AutoShip";
+				$payment_methods[] = "SkyBank Auto-Ship";
 		}
 
 		// display warning if there are products out of stock
@@ -1720,7 +1720,7 @@ class AdminReOccurOrdersController extends ModuleAdminController
 		{
 			$module = Module::getInstanceByName($payment['name']);
 			if (Validate::isLoadedObject($module) && $module->active)
-				$payment_methods[] = "SkyBank AutoShip";
+				$payment_methods[] = "SkyBank Auto-Ship";
 		}
 
 		// display warning if there are products out of stock

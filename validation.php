@@ -116,7 +116,7 @@ $response = $skybankaim->getResponse($url, $params);
 $pnref = $response->PNRef;
 
 $message = $response->Message;
-$payment_method = 'SkyBank AIM';
+$payment_method = 'SkyBank APM';
 $re_occur = (bool)Configuration::get('SKYBANK_AIM_REOCC');
 
 
