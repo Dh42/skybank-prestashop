@@ -1,25 +1,6 @@
-
-
 <a href="#" class="skybankaim-logo" target="_blank"><img src="{$module_dir}img/logo_skybank.png" alt="SkyBank" border="0" /></a>
 <p class="skybankaim-intro">{l s='Start accepting payments through your PrestaShop store with SkyBank, the pioneering provider of ecommerce payment services.  SkyBank makes accepting payments safe, easy and affordable.' mod='skybankaim'}</p>
 <p class="skybankaim-sign-up">{l s='Do you require a payment gateway account? ' mod='skybankaim'}<a href="#" target="_blank">{l s='Sign Up Now' mod='skybankaim'}</a></p>
-<!--
-<div class="skybankaim-content">
-	<div class="skybankaim-leftCol">
-		<h3>{l s='Why Choose SkyBank?' mod='skybankaim'}</h3>
-		<ul>
-			<li>{l s='Leading payment gateway' mod='skybankaim'}</li>
-			<li>{l s='Multiple currency acceptance' mod='skybankaim'}</li>
-			<li>{l s='Gateway and merchant account set up available' mod='skybankaim'}</li>
-			<li>{l s='Simple setup process' mod='skybankaim'}
-		</li>
-		</ul>
-		<ul class="none" style = "display: inline; font-size: 13px;">
-			<li><a href="#" target="_blank" class="skybankaim-link">{l s='Sign up Now' mod='skybankaim'}</a></li>
-		</ul>
-	</div>
-</div>
--->
 <form action="{$smarty.server.REQUEST_URI|escape:'htmlall':'UTF-8'}" method="post">
 	<fieldset>
 		<legend>{l s='Configure your Payment Details' mod='skybankaim'}</legend>
@@ -83,13 +64,13 @@
 			<h4>{l s='Cards*' mod='skybankaim'}</h4>
 			<div class="margin-form" style="padding-left:60px;" id="skybankaim_cards">
 			<input type="checkbox" name="skybankaim_card_visa" {if $SKYBANK_AIM_CARD_VISA}checked="checked"{/if} />
-				<img src="{$module_dir}/cards/visa.gif" alt="visa" />
+				<img src="{$module_dir}/img/visa.gif" alt="visa" />
 			<input type="checkbox" name="skybankaim_card_mastercard" {if $SKYBANK_AIM_CARD_MASTERCARD}checked="checked"{/if} />
-				<img src="{$module_dir}/cards/mastercard.gif" alt="visa" />
+				<img src="{$module_dir}/img/mastercard.gif" alt="visa" />
 			<input type="checkbox" name="skybankaim_card_ax" {if $SKYBANK_AIM_CARD_AX}checked="checked"{/if} />
-				<img src="{$module_dir}/cards/amex.png" alt="American Express" />
+				<img src="{$module_dir}/img/amex.png" alt="American Express" />
 			<input type="checkbox" name="skybankaim_card_discover" {if $SKYBANK_AIM_CARD_DISCOVER}checked="checked"{/if} />
-				<img src="{$module_dir}/cards/discover.png" alt="Discover" />
+				<img src="{$module_dir}/img/discover.png" alt="Discover" />
 			</div>
 		<hr size="1" style="background: #BBB; margin: 0; height: 1px;" noshade="">
 	 	<h4>{l s='Default Transaction Mode' mod='skybankaim'}</h4>

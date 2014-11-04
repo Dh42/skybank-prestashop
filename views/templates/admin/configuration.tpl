@@ -1,33 +1,8 @@
-
 <p><a href="#" class="skybankaim-logo" target="_blank"><img src="{$module_dir}img/logo_skybank.png" alt="SkyBank" border="0" /></a></p>
 <p class="skybankaim-intro">{l s='Simple. Reliable. Secure. SkyBank has partnered with PrestaShop to provide our clients with an easy-to-use payment module that provides cart owners the flexibility they need to easily accept payments online. With hundreds of millions of dollars processed annually through our payment partner network, we have consistently proven that our clients benefit from using our secure technology.' mod='skybankaim'}</p>
-
-
-
 <p class="skybankaim-intro"><a href="https://www.skybankfinancial.com/prestashop.php" target="_blank">{l s='Open your account today!  Sign up now' mod='skybankaim'}</a></p>
 <p class="skybankaim-intro">Do you have a feature request that you would like to see in the next version of our module?  Email us at info@skybankfinancial.com and let us know!</p>
-
-<!--
-<div class="skybankaim-content">
-	<div class="skybankaim-leftCol">
-		<h3>{l s='Why Choose SkyBank?' mod='skybankaim'}</h3>
-		<ul>
-			<li>{l s='Leading payment gateway' mod='skybankaim'}</li>
-			<li>{l s='Multiple currency acceptance' mod='skybankaim'}</li>
-			<li>{l s='Gateway and merchant account set up available' mod='skybankaim'}</li>
-			<li>{l s='Simple setup process' mod='skybankaim'}
-		</li>
-		</ul>
-		<ul class="none" style = "display: inline; font-size: 13px;">
-			<li><a href="#" target="_blank" class="skybankaim-link">{l s='Sign up Now' mod='skybankaim'}</a></li>
-		</ul>
-	</div>
-</div>
--->
-
 <div class="panel">
-
-
 <div class="panel-heading">{l s='Configure your Payment Details' mod='skybankaim'}</div>
 <form action="{$smarty.server.REQUEST_URI|escape:'htmlall':'UTF-8'}" method="post" class="defaultForm form-horizontal">
 	<fieldset>
@@ -108,10 +83,6 @@
 					</select>
 				</div>
 			</div>
-
-
-
-
 		</fieldset>
 		<fieldset style="position: relative;float: left;width: 40%;">
 			<h4>{l s='Credit/Debit Card Settings' mod='skybankaim'}</h4>
@@ -125,8 +96,6 @@
 			<input type="checkbox" name="skybankaim_card_discover" {if $SKYBANK_AIM_CARD_DISCOVER}checked="checked"{/if} />
 				<img src="{$module_dir}/img/discover.png" alt="Discover" />
 			</div>
-
-
 		<hr size="1" style="background: #BBB; margin: 0; height: 1px;" noshade="">
 	 	<h4>{l s='Default Credit/Debit Transaction Mode' mod='skybankaim'}</h4>
 	 	<div class="margin-form" id="skybankaim_sale"  style="padding-left:60px;">
@@ -135,7 +104,6 @@
 			<input type="radio" name="skybankaim_sale" value="0" style="vertical-align: middle;" {if !$SKYBANK_AIM_SALE}checked="checked"{/if} />
 			<span>{l s='Authorize Only' mod='skybankaim'}</span><br/>
 	 	</div>
-
 	 	<hr size="1" style="background: #BBB; margin: 0; height: 1px;" noshade="">
 		 	<h4>{l s='Electronic Check Settings' mod='skybankaim'}</h4>
 		 	<p><b>*Separate ACH Account Approval Required. Not Sure Call? 1-800-815-0935</b></p>
@@ -146,7 +114,6 @@
 			<span>{l s='Disabled' mod='skybankaim'}</span><br/>
 			<input type="checkbox" name="skybankaim_drivers_license_no" {if $SKYBANK_DRV_LCNS_NO}checked="checked"{/if} />
 			<label>{l s='Require Drivers License Number' mod='skybankaim'}</label><br/>
-
 		 </div>
 		 <hr size="1" style="background: #BBB; margin: 0; height: 1px;" noshade="">
 		 	<h4>{l s='Cron' mod='skybankaim'}</h4>
