@@ -117,13 +117,13 @@
 			<h4>{l s='Credit/Debit Card Settings' mod='skybankaim'}</h4>
 			<div class="margin-form" style="padding-left:60px;" id="skybankaim_cards">
 			<input type="checkbox" name="skybankaim_card_visa" {if $SKYBANK_AIM_CARD_VISA}checked="checked"{/if} />
-				<img src="{$module_dir}/cards/visa.png" alt="Visa" />
+				<img src="{$module_dir}/img/visa.png" alt="Visa" />
 			<input type="checkbox" name="skybankaim_card_mastercard" {if $SKYBANK_AIM_CARD_MASTERCARD}checked="checked"{/if} />
-				<img src="{$module_dir}/cards/mc.png" alt="Mastercard" />
+				<img src="{$module_dir}/img/mc.png" alt="Mastercard" />
 			<input type="checkbox" name="skybankaim_card_ax" {if $SKYBANK_AIM_CARD_AX}checked="checked"{/if} />
-				<img src="{$module_dir}/cards/amex.png" alt="American Express" />
+				<img src="{$module_dir}/img/amex.png" alt="American Express" />
 			<input type="checkbox" name="skybankaim_card_discover" {if $SKYBANK_AIM_CARD_DISCOVER}checked="checked"{/if} />
-				<img src="{$module_dir}/cards/discover.png" alt="Discover" />
+				<img src="{$module_dir}/img/discover.png" alt="Discover" />
 			</div>
 
 

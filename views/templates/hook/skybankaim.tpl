@@ -38,10 +38,10 @@
 <form name="skybankaim_form" id="skybankaim_form" action="{$module_dir}validation.php" method="post">
  <span style="border: 1px solid #595A5E;display: block;padding: 0.6em;text-decoration: none;margin-left: 0.7em;">
   <a id="click_skybankaim" href="#" title="{l s='Pay by Credit/Debit Card' mod='skybankaim'}" style="display: block;text-decoration: none; font-weight: bold;">
-  {if $cards.visa == 1}<img src="{$module_dir}cards/visa.png" alt="{l s='Visa Logo' mod='skybankaim'}" style="vertical-align: middle;" />{/if}
-  {if $cards.mastercard == 1}<img src="{$module_dir}cards/mc.png" alt="{l s='Mastercard Logo' mod='skybankaim'}" style="vertical-align: middle;" />{/if}
-    {if $cards.ax == 1}<img src="{$module_dir}cards/amex.png" alt="{l s='American Express Logo' mod='skybankaim'}" style="vertical-align: middle;" />{/if}
-  {if $cards.discover == 1}<img src="{$module_dir}cards/discover.png" alt="{l s='Discover Logo' mod='skybankaim'}" style="vertical-align: middle;" />{/if}
+  {if $cards.visa == 1}<img src="{$module_dir}img/visa.png" alt="{l s='Visa Logo' mod='skybankaim'}" style="vertical-align: middle;" />{/if}
+  {if $cards.mastercard == 1}<img src="{$module_dir}img/mc.png" alt="{l s='Mastercard Logo' mod='skybankaim'}" style="vertical-align: middle;" />{/if}
+    {if $cards.ax == 1}<img src="{$module_dir}img/amex.png" alt="{l s='American Express Logo' mod='skybankaim'}" style="vertical-align: middle;" />{/if}
+  {if $cards.discover == 1}<img src="{$module_dir}img/discover.png" alt="{l s='Discover Logo' mod='skybankaim'}" style="vertical-align: middle;" />{/if}
   	&nbsp;&nbsp;{l s='Pay by Credit/Debit Card' mod='skybankaim'}			
   </a>
   {if $isFailed == 0 || $isFailed == 2}						
@@ -145,7 +145,7 @@
 	{/if}
 	<form name="skybankcheck_form" id="skybankcheck_form" action="{$module_dir}validation.php" method="post">
 	 <span style="border: 1px solid #595A5E;display: block;padding: 0.6em;text-decoration: none;margin-left: 0.7em;">
-	 <a id="click_skybank_echeck" href="#" title="{l s='Pay by Check' mod='skybankaim'}" style="display: block;text-decoration: none; font-weight: bold;"><img src="{$module_dir}cards/echeck.jpg" alt="{l s='Echeck Logo' mod='skybankaim'}" style="vertical-align: middle;" />
+	 <a id="click_skybank_echeck" href="#" title="{l s='Pay by Check' mod='skybankaim'}" style="display: block;text-decoration: none; font-weight: bold;"><img src="{$module_dir}img/echeck.jpg" alt="{l s='Echeck Logo' mod='skybankaim'}" style="vertical-align: middle;" />
           &nbsp;&nbsp;{l s='Pay by Electronic Check' mod='skybankaim'}			
          </a>
   {if $isFailed == 0 || $isFailed == 1}						
