@@ -40,12 +40,12 @@
 	var priceDisplayPrecision = {$smarty.const._PS_PRICE_DISPLAY_PRECISION_|intval};
 	var use_taxes = {if $order->getTaxCalculationMethod() == $smarty.const.PS_TAX_INC}true{else}false{/if};
 	var stock_management = {$stock_management|intval};
-	var txt_add_product_stock_issue = "{l s='Are you sure you want to add this quantity?' js=1}";
-	var txt_add_product_new_invoice = "{l s='Are you sure you want to create a new invoice?' js=1}";
-	var txt_add_product_no_product = "{l s='Error: No product has been selected' js=1}";
-	var txt_add_product_no_product_quantity = "{l s='Error: Quantity of products must be set' js=1}";
-	var txt_add_product_no_product_price = "{l s='Error: Product price must be set' js=1}";
-	var txt_confirm = "{l s='Are you sure?' js=1}";
+	var txt_add_product_stock_issue = "{l s='Are you sure you want to add this quantity?' js=1 mod='skybankaim'}";
+	var txt_add_product_new_invoice = "{l s='Are you sure you want to create a new invoice?' js=1 mod='skybankaim'}";
+	var txt_add_product_no_product = "{l s='Error: No product has been selected' js=1 mod='skybankaim'}";
+	var txt_add_product_no_product_quantity = "{l s='Error: Quantity of products must be set' js=1 mod='skybankaim'}";
+	var txt_add_product_no_product_price = "{l s='Error: Product price must be set' js=1 mod='skybankaim'}";
+	var txt_confirm = "{l s='Are you sure?' js=1 mod='skybankaim'}";
 	var statesShipped = new Array();
 	var has_voucher = {if count($discounts)}1{else}0{/if};
 	{foreach from=$states item=state}
@@ -65,21 +65,21 @@
 			<div class="col-xs-6 col-sm-3 box-stats color3" >
 				<div class="kpi-content">
 					<i class="icon-calendar-empty"></i>
-					<span class="title">{l s='Date'}</span>
+					<span class="title">{l s='Date' mod='skybankaim'}</span>
 					<span class="value">{dateFormat date=$order->date_add full=false}</span>
 				</div>
 			</div>
 			<div class="col-xs-6 col-sm-3 box-stats color4" >
 				<div class="kpi-content">
 					<i class="icon-money"></i>
-					<span class="title">{l s='Total'}</span>
+					<span class="title">{l s='Total' mod='skybankaim'}</span>
 					<span class="value">{displayPrice price=$order->total_paid_tax_incl currency=$currency->id}</span>
 				</div>
 			</div>
 			<div class="col-xs-6 col-sm-3 box-stats color2" >
 				<div class="kpi-content">
 					<i class="icon-comments"></i>
-					<span class="title">{l s='Messages'}</span>
+					<span class="title">{l s='Messages' mod='skybankaim'}</span>
 					<span class="value"><a href="{$link->getAdminLink('AdminCustomerThreads')|escape:'html':'UTF-8'}">{sizeof($customer_thread_message)}</a></span>
 				</div>
 			</div>
@@ -87,7 +87,7 @@
 				<a href="#start_products">
 					<div class="kpi-content">
 						<i class="icon-book"></i>
-						<span class="title">{l s='Products'}</span>
+						<span class="title">{l s='Products' mod='skybankaim'}</span>
 						<span class="value">{sizeof($products)}</span>
 					</div>
 				</a>
@@ -106,11 +106,11 @@
 	        
 				<form action="" method="POST" class="defaultForm form-horizontal">
 					<div class="form-group">
-						<label class="control-label col-lg-2">{l s='Auto-Ship every'}</label>
+						<label class="control-label col-lg-2">{l s='Auto-Ship every' mod='skybankaim'}</label>
 						<div class="col-lg-3" style="width:400px;">
-							 <input type="text" name="autoship_frequency" value="{$autoship_frequency}" style="width:70px;float:left"/><p style="margin-top:7px;margin-left:10px;float:left;padding-right:10px"> {l s='Days'}</p>
-							 <input class="btn btn-default" type="submit" name="submitAutoship" value="{l s='Change Frequency'}">
-							 <input class="btn btn-default" type="submit" name="cancelAutoship" value="{l s='Cancel Auto-Ship'}">
+							 <input type="text" name="autoship_frequency" value="{$autoship_frequency}" style="width:70px;float:left"/><p style="margin-top:7px;margin-left:10px;float:left;padding-right:10px"> {l s='Days' mod='skybankaim'}</p>
+							 <input class="btn btn-default" type="submit" name="submitAutoship" value="{ mod='skybankaim'l s='Change Frequency'}">
+							 <input class="btn btn-default" type="submit" name="cancelAutoship" value="{ mod='skybankaim'l s='Cancel Auto-Ship'}">
 						</div>
 					</div>
 					
@@ -125,7 +125,7 @@
 			<div class="panel">
 				<div class="panel-heading">
 					<i class="icon-credit-card"></i>
-					{l s='Order'}
+					{l s='Order' mod='skybankaim'}
 					<span class="badge">{$order->reference}</span>
 					<span class="badge">{l s="#"}{$order->id}</span>
 					<div class="panel-heading-action">
@@ -143,30 +143,30 @@
 				<div class="well hidden-print">
 					<a class="btn btn-default" href="javascript:window.print()">
 						<i class="icon-print"></i>
-						{l s='Print order'}
+						{l s='Print order' mod='skybankaim'}
 					</a>
 					&nbsp;
 					{if Configuration::get('PS_INVOICE') && count($invoices_collection) && (($currentState && $currentState->invoice && $order->invoice_number) || $order->invoice_number)}
 						<a class="btn btn-default" href="{$link->getAdminLink('AdminPdf')|escape:'html':'UTF-8'}&amp;submitAction=generateInvoicePDF&amp;id_order={$order->id|intval}" target="_blank">
 							<i class="icon-file"></i>
-							{l s='View invoice'}
+							{l s='View invoice' mod='skybankaim'}
 						</a>
 					{else}
 						<span class="span label label-inactive">
 							<i class="icon-remove"></i>
-							{l s='No invoice'}
+							{l s='No invoice' mod='skybankaim'}
 						</span>
 					{/if}
 					&nbsp;
 					{if (($currentState && $currentState->delivery && $order->delivery_number) || $order->delivery_number)}
 						<a class="btn btn-default"  href="{$link->getAdminLink('AdminPdf')|escape:'html':'UTF-8'}&amp;submitAction=generateDeliverySlipPDF&amp;id_order={$order->id|intval}" target="_blank">
 							<i class="icon-truck"></i>
-							{l s='View delivery slip'}
+							{l s='View delivery slip' mod='skybankaim'}
 						</a>
 					{else}
 						<span class="span label label-inactive">
 							<i class="icon-remove"></i>
-							{l s='No delivery slip'}
+							{l s='No delivery slip' mod='skybankaim'}
 						</span>
 					{/if}
 					&nbsp;
@@ -174,11 +174,11 @@
 						<a id="desc-order-standard_refund" class="btn btn-default" href="#refundForm">
 							<i class="icon-exchange"></i>
 							{if $order->hasBeenShipped()}
-								{l s='Return products'}
+								{l s='Return products' mod='skybankaim'}
 							{elseif $order->hasBeenPaid()}
-								{l s='Standard refund'}
+								{l s='Standard refund' mod='skybankaim'}
 							{else}
-								{l s='Cancel products'}
+								{l s='Cancel products' mod='skybankaim'}
 							{/if}
 						</a>
 						&nbsp;
@@ -186,7 +186,7 @@
 					{if $order->hasInvoice()}
 						<a id="desc-order-partial_refund" class="btn btn-default" href="#refundForm">
 							<i class="icon-exchange"></i>
-							{l s='Partial refund'}
+							{l s='Partial refund' mod='skybankaim'}
 						</a>
 					{/if}
 				</div>
@@ -196,13 +196,13 @@
 					<li class="active">
 						<a href="#status">
 							<i class="icon-time"></i>
-							{l s='Status'} <span class="badge">{$history|@count}</span>
+							{l s='Status' mod='skybankaim'} <span class="badge">{$history|@count}</span>
 						</a>
 					</li>
 					<li>
 						<a href="#documents">
 							<i class="icon-file-text"></i>
-							{l s='Documents'} <span class="badge">{$order->getDocuments()|@count}</span>
+							{l s='Documents' mod='skybankaim'} <span class="badge">{$order->getDocuments()|@count}</span>
 						</a>
 					</li>
 				</ul>
@@ -211,7 +211,7 @@
 					{$HOOK_CONTENT_ORDER}
 					<!-- Tab status -->
 					<div class="tab-pane active" id="status">
-						<h4 class="visible-print">{l s='Status'} <span class="badge">({$history|@count})</span></h4>
+						<h4 class="visible-print">{l s='Status' mod='skybankaim'} <span class="badge">({$history|@count})</span></h4>
 						<!-- History of status -->
 						<div class="table-responsive">
 							<table class="table history-status row-margin-bottom">
@@ -249,7 +249,7 @@
 								</div>
 								<div class="col-lg-3">
 									<button type="submit" name="submitState" class="btn btn-primary">
-										{l s='Update status'}
+										{l s='Update status' mod='skybankaim'}
 									</button>
 								</div>
 							</div>
@@ -257,7 +257,7 @@
 					</div>
 					<!-- Tab documents -->
 					<div class="tab-pane" id="documents">
-						<h4 class="visible-print">{l s='Documents'} <span class="badge">({$order->getDocuments()|@count})</span></h4>
+						<h4 class="visible-print">{l s='Documents' mod='skybankaim'} <span class="badge">({$order->getDocuments()|@count})</span></h4>
 						{* Include document template *}
 						{include file='controllers/orders/_documents.tpl'}
 					</div>
@@ -275,13 +275,13 @@
 					<li class="active">
 						<a href="#shipping">
 							<i class="icon-truck "></i>
-							{l s='Shipping'} <span class="badge">{$order->getShipping()|@count}</span>
+							{l s='Shipping' mod='skybankaim'} <span class="badge">{$order->getShipping()|@count}</span>
 						</a>
 					</li>
 					<li>
 						<a href="#returns">
 							<i class="icon-undo"></i>
-							{l s='Merchandise Returns'} <span class="badge">{$order->getReturn()|@count}</span>
+							{l s='Merchandise Returns' mod='skybankaim'} <span class="badge">{$order->getReturn()|@count}</span>
 						</a>
 					</li>
 				</ul>
@@ -290,13 +290,13 @@
 				{$HOOK_CONTENT_SHIP}
 					<!-- Tab shipping -->
 					<div class="tab-pane active" id="shipping">
-						<h4 class="visible-print">{l s='Shipping'} <span class="badge">({$order->getShipping()|@count})</span></h4>
+						<h4 class="visible-print">{l s='Shipping' mod='skybankaim'} <span class="badge">({$order->getShipping()|@count})</span></h4>
 						<!-- Shipping block -->
 						{if !$order->isVirtual()}
 						<div class="form-horizontal">
 							{if $order->gift_message}
 							<div class="form-group">
-								<label class="control-label col-lg-3">{l s='Message'}</label>
+								<label class="control-label col-lg-3">{l s='Message' mod='skybankaim'}</label>
 								<div class="col-lg-9">
 									<p class="form-control-static">{$order->gift_message|nl2br}</p>
 								</div>
@@ -308,22 +308,22 @@
 							{/if}
 							<hr />
 							{if $order->recyclable}
-								<span class="label label-success"><i class="icon-check"></i> {l s='Recycled packaging'}</span>
+								<span class="label label-success"><i class="icon-check"></i> {l s='Recycled packaging' mod='skybankaim'}</span>
 							{else}
-								<span class="label label-inactive"><i class="icon-remove"></i> {l s='Recycled packaging'}</span>
+								<span class="label label-inactive"><i class="icon-remove"></i> {l s='Recycled packaging' mod='skybankaim'}</span>
 							{/if}
 
 							{if $order->gift}
-								<span class="label label-success"><i class="icon-check"></i> {l s='Gift wrapping'}</span>
+								<span class="label label-success"><i class="icon-check"></i> {l s='Gift wrapping' mod='skybankaim'}</span>
 							{else}
-								<span class="label label-inactive"><i class="icon-remove"></i> {l s='Gift wrapping'}</span>
+								<span class="label label-inactive"><i class="icon-remove"></i> {l s='Gift wrapping' mod='skybankaim'}</span>
 							{/if}
 						</div>
 						{/if}
 					</div>
 					<!-- Tab returns -->
 					<div class="tab-pane" id="returns">
-						<h4 class="visible-print">{l s='Merchandise Returns'} <span class="badge">({$order->getReturn()|@count})</span></h4>
+						<h4 class="visible-print">{l s='Merchandise Returns' mod='skybankaim'} <span class="badge">({$order->getReturn()|@count})</span></h4>
 						{if !$order->isVirtual()}
 						<!-- Return block -->
 							{if $order->getReturn()|count > 0}
@@ -352,16 +352,16 @@
 															{$line.tracking_number|htmlentities}
 														</button>
 														<button type="submit" class="btn btn-default" name="submitShippingNumber">
-															{l s='Update'}
+															{l s='Update' mod='skybankaim'}
 														</button>
 													</span>
 													<button href="#" class="edit_shipping_number_link">
 														<i class="icon-pencil"></i>
-														{l s='Edit'}
+														{l s='Edit' mod='skybankaim'}
 													</button>
 													<button href="#" class="cancel_shipping_number_link" style="display: none;">
 														<i class="icon-remove"></i>
-														{l s='Cancel'}
+														{l s='Cancel' mod='skybankaim'}
 													</button>
 												</form>
 												{/if}
@@ -375,7 +375,7 @@
 							<div class="list-empty hidden-print">
 								<div class="list-empty-msg">
 									<i class="icon-warning-sign list-empty-icon"></i>
-									{l s='No merchandise returned yet'}
+									{l s='No merchandise returned yet' mod='skybankaim'}
 								</div>
 							</div>
 							{/if}
@@ -400,16 +400,16 @@
 				</div>
 				{if count($order->getOrderPayments()) > 0}
 					<p class="alert alert-danger" style="{if round($orders_total_paid_tax_incl, 2) == round($total_paid, 2) || $currentState->id == 6}display: none;{/if}">
-						{l s='Warning'}
+						{l s='Warning' mod='skybankaim'}
 						<strong>{displayPrice price=$total_paid currency=$currency->id}</strong>
-						{l s='paid instead of'}
+						{l s='paid instead of' mod='skybankaim'}
 						<strong class="total_paid">{displayPrice price=$orders_total_paid_tax_incl currency=$currency->id}</strong>
 						{foreach $order->getBrother() as $brother_order}
 							{if $brother_order@first}
 								{if count($order->getBrother()) == 1}
-									<br />{l s='This warning also concerns order '}
+									<br />{l s='This warning also concerns order ' mod='skybankaim'}
 								{else}
-									<br />{l s='This warning also concerns the next orders:'}
+									<br />{l s='This warning also concerns the next orders:' mod='skybankaim'}
 								{/if}
 							{/if}
 							<a href="{$current_index}&amp;vieworder&amp;id_order={$brother_order->id}&amp;token={$smarty.get.token|escape:'html':'UTF-8'}">
@@ -423,11 +423,11 @@
 						<table class="table">
 							<thead>
 								<tr>
-									<th><span class="title_box ">{l s='Date'}</span></th>
-									<th><span class="title_box ">{l s='Payment method'}</span></th>
-									<th><span class="title_box ">{l s='Transaction ID'}</span></th>
-									<th><span class="title_box ">{l s='Amount'}</span></th>
-									<th><span class="title_box ">{l s='Invoice'}</span></th>
+									<th><span class="title_box ">{l s='Date' mod='skybankaim'}</span></th>
+									<th><span class="title_box ">{l s='Payment method' mod='skybankaim'}</span></th>
+									<th><span class="title_box ">{l s='Transaction ID' mod='skybankaim'}</span></th>
+									<th><span class="title_box ">{l s='Amount' mod='skybankaim'}</span></th>
+									<th><span class="title_box ">{l s='Invoice' mod='skybankaim'}</span></th>
 									<th></th>
 								</tr>
 							</thead>
@@ -447,42 +447,42 @@
 									<td class="actions">
 										<button class="btn btn-default open_payment_information">
 											<i class="icon-search"></i>
-											{l s='Details'}
+											{l s='Details' mod='skybankaim'}
 										</button>
 									</td>
 								</tr>
 								<tr class="payment_information" style="display: none;">
 									<td colspan="5">
 										<p>
-											<b>{l s='Card Number'}</b>&nbsp;
+											<b>{l s='Card Number' mod='skybankaim'}</b>&nbsp;
 											{if $payment->card_number}
 												{$payment->card_number}
 											{else}
-												<i>{l s='Not defined'}</i>
+												<i>{l s='Not defined' mod='skybankaim'}</i>
 											{/if}
 										</p>
 										<p>
-											<b>{l s='Card Brand'}</b>&nbsp;
+											<b>{l s='Card Brand' mod='skybankaim'}</b>&nbsp;
 											{if $payment->card_brand}
 												{$payment->card_brand}
 											{else}
-												<i>{l s='Not defined'}</i>
+												<i>{l s='Not defined' mod='skybankaim'}</i>
 											{/if}
 										</p>
 										<p>
-											<b>{l s='Card Expiration'}</b>&nbsp;
+											<b>{l s='Card Expiration' mod='skybankaim'}</b>&nbsp;
 											{if $payment->card_expiration}
 												{$payment->card_expiration}
 											{else}
-												<i>{l s='Not defined'}</i>
+												<i>{l s='Not defined' mod='skybankaim'}</i>
 											{/if}
 										</p>
 										<p>
-											<b>{l s='Card Holder'}</b>&nbsp;
+											<b>{l s='Card Holder' mod='skybankaim'}</b>&nbsp;
 											{if $payment->card_holder}
 												{$payment->card_holder}
 											{else}
-												<i>{l s='Not defined'}</i>
+												<i>{l s='Not defined' mod='skybankaim'}</i>
 											{/if}
 										</p>
 									</td>
@@ -492,7 +492,7 @@
 									<td class="list-empty hidden-print" colspan="6">
 										<div class="list-empty-msg">
 											<i class="icon-warning-sign list-empty-icon"></i>
-											{l s='No payment methods are available'}
+											{l s='No payment methods are available' mod='skybankaim'}
 										</div>
 									</td>
 								</tr>
@@ -535,7 +535,7 @@
 									</td>
 									<td class="actions">
 										<button class="btn btn-primary btn-block" type="submit" name="submitAddPayment">
-											{l s='Add'}
+											{l s='Add' mod='skybankaim'}
 										</button>
 									</td>
 								</tr>
@@ -546,7 +546,7 @@
 				{if (!$order->valid && sizeof($currencies) > 1)}
 					<form class="form-horizontal well" method="post" action="{$currentIndex|escape:'html':'UTF-8'}&amp;vieworder&amp;id_order={$order->id}&amp;token={$smarty.get.token|escape:'html':'UTF-8'}">
 						<div class="row">
-							<label class="control-label col-lg-3">{l s='Change currency'}</label>
+							<label class="control-label col-lg-3">{l s='Change currency' mod='skybankaim'}</label>
 							<div class="col-lg-6">
 								<select name="new_currency">
 								{foreach from=$currencies item=currency_change}
@@ -555,10 +555,10 @@
 									{/if}
 								{/foreach}
 								</select>
-								<p class="help-block">{l s='Do not forget to update your exchange rate before making this change.'}</p>
+								<p class="help-block">{l s='Do not forget to update your exchange rate before making this change.' mod='skybankaim'}</p>
 							</div>
 							<div class="col-lg-3">
-								<button type="submit" class="btn btn-default" name="submitChangeCurrency"><i class="icon-refresh"></i> {l s='Change'}</button>
+								<button type="submit" class="btn btn-default" name="submitChangeCurrency"><i class="icon-refresh"></i> {l s='Change' mod='skybankaim'}</button>
 							</div>
 						</div>
 					</form>
@@ -571,7 +571,7 @@
 				{if $customer->id}
 					<div class="panel-heading">
 						<i class="icon-user"></i>
-						{l s='Customer'}
+						{l s='Customer' mod='skybankaim'}
 						<span class="badge">
 							<a href="?tab=AdminCustomers&amp;id_customer={$customer->id}&amp;viewcustomer&amp;token={getAdminToken tab='AdminCustomers'}">
 								{if Configuration::get('PS_B2B_ENABLE')}{$customer->company} - {/if}
@@ -581,38 +581,38 @@
 							</a>
 						</span>
 						<span class="badge">
-							{l s='#'}{$customer->id}
+							{l s='#' mod='skybankaim'}{$customer->id}
 						</span>
 					</div>
 					<div class="row">
 						<div class="col-xs-6">
 							{if ($customer->isGuest())}
-								{l s='This order has been placed by a guest.'}
+								{l s='This order has been placed by a guest.' mod='skybankaim'}
 								{if (!Customer::customerExists($customer->email))}
 									<form method="post" action="index.php?tab=AdminCustomers&amp;id_customer={$customer->id}&amp;token={getAdminToken tab='AdminCustomers'}">
 										<input type="hidden" name="id_lang" value="{$order->id_lang}" />
-										<input class="btn btn-default" type="submit" name="submitGuestToCustomer" value="{l s='Transform a guest into a customer'}" />
-										<p class="help-block">{l s='This feature will generate a random password and send an email to the customer.'}</p>
+										<input class="btn btn-default" type="submit" name="submitGuestToCustomer" value="{ mod='skybankaim'l s='Transform a guest into a customer'}" />
+										<p class="help-block">{l s='This feature will generate a random password and send an email to the customer.' mod='skybankaim'}</p>
 									</form>
 								{else}
 									<div class="alert alert-warning">
-										{l s='A registered customer account has already claimed this email address'}
+										{l s='A registered customer account has already claimed this email address' mod='skybankaim'}
 									</div>
 								{/if}
 							{else}
 								<dl class="well list-detail">
-									<dt>{l s='Email'}</dt>
+									<dt>{l s='Email' mod='skybankaim'}</dt>
 										<dd><a href="mailto:{$customer->email}"><i class="icon-envelope-o"></i> {$customer->email}</a></dd>
-									<dt>{l s='Account registered'}</dt>
+									<dt>{l s='Account registered' mod='skybankaim'}</dt>
 										<dd class="text-muted"><i class="icon-calendar-o"></i> {dateFormat date=$customer->date_add full=true}</dd>
-									<dt>{l s='Valid orders placed'}</dt>
+									<dt>{l s='Valid orders placed' mod='skybankaim'}</dt>
 										<dd><span class="badge">{$customerStats['nb_orders']|intval}</span></dd>
-									<dt>{l s='Total spent since registration'}</dt>
+									<dt>{l s='Total spent since registration' mod='skybankaim'}</dt>
 										<dd><span class="badge badge-success">{displayPrice price=Tools::ps_round(Tools::convertPrice($customerStats['total_orders'], $currency), 2) currency=$currency->id}</span></dd>
 									{if Configuration::get('PS_B2B_ENABLE')}
-										<dt>{l s='Siret'}</dt>
+										<dt>{l s='Siret' mod='skybankaim'}</dt>
 											<dd>{$customer->siret}</dd>
-										<dt>{l s='APE'}</dt>
+										<dt>{l s='APE' mod='skybankaim'}</dt>
 											<dd>{$customer->ape}</dd>
 									{/if}
 								</dl>
@@ -621,12 +621,12 @@
 
 						<div class="col-xs-6">
 							<div class="form-group hidden-print">
-								<a href="?tab=AdminCustomers&amp;id_customer={$customer->id}&amp;viewcustomer&amp;token={getAdminToken tab='AdminCustomers'}" class="btn btn-default btn-block">{l s='View full details...'}</a>
+								<a href="?tab=AdminCustomers&amp;id_customer={$customer->id}&amp;viewcustomer&amp;token={getAdminToken tab='AdminCustomers'}" class="btn btn-default btn-block">{l s='View full details...' mod='skybankaim'}</a>
 							</div>
 							<div class="panel panel-sm">
 								<div class="panel-heading">
 									<i class="icon-eye-slash"></i>
-									{l s='Private note'}
+									{l s='Private note' mod='skybankaim'}
 								</div>
 								<form id="customer_note" class="form-horizontal" action="ajax.php" method="post" onsubmit="saveCustomerNote({$customer->id});return false;" >
 									<div class="form-group">
@@ -638,7 +638,7 @@
 										<div class="col-lg-12">
 											<button type="submit" id="submitCustomerNote" class="btn btn-default pull-right" disabled="disabled">
 												<i class="icon-save"></i>
-												{l s='Save'}
+												{l s='Save' mod='skybankaim'}
 											</button>
 										</div>
 									</div>
@@ -654,13 +654,13 @@
 						<li class="active">
 							<a href="#addressShipping">
 								<i class="icon-truck"></i>
-								{l s='Shipping address'}
+								{l s='Shipping address' mod='skybankaim'}
 							</a>
 						</li>
 						<li>
 							<a href="#addressInvoice">
 								<i class="icon-file-text"></i>
-								{l s='Invoice address'}
+								{l s='Invoice address' mod='skybankaim'}
 							</a>
 						</li>
 					</ul>
@@ -669,7 +669,7 @@
 						<!-- Tab status -->
 						<div class="tab-pane  in active" id="addressShipping">
 							<!-- Addresses -->
-							<h4 class="visible-print">{l s='Shipping address'}</h4>
+							<h4 class="visible-print">{l s='Shipping address' mod='skybankaim'}</h4>
 							{if !$order->isVirtual()}
 							<!-- Shipping address -->
 								{if $can_edit}
@@ -695,7 +695,7 @@
 												</select>
 											</div>
 											<div class="col-lg-3">
-												<button class="btn btn-default" type="submit" name="submitAddressShipping"><i class="icon-refresh"></i> {l s='Change'}</button>
+												<button class="btn btn-default" type="submit" name="submitAddressShipping"><i class="icon-refresh"></i> {l s='Change' mod='skybankaim'}</button>
 											</div>
 										</div>
 									</form>
@@ -705,7 +705,7 @@
 										<div class="col-sm-6">
 											<a class="btn btn-default pull-right" href="?tab=AdminAddresses&amp;id_address={$addresses.delivery->id}&amp;addaddress&amp;realedit=1&amp;id_order={$order->id}{if ($addresses.delivery->id == $addresses.invoice->id)}&amp;address_type=1{/if}&amp;token={getAdminToken tab='AdminAddresses'}&amp;back={$smarty.server.REQUEST_URI|urlencode}">
 												<i class="icon-pencil"></i>
-												{l s='Edit'}
+												{l s='Edit' mod='skybankaim'}
 											</a>
 											{displayAddressDetail address=$addresses.delivery newLine='<br />'}
 											{if $addresses.delivery->other}
@@ -721,7 +721,7 @@
 						</div>
 						<div class="tab-pane " id="addressInvoice">
 							<!-- Invoice address -->
-							<h4 class="visible-print">{l s='Invoice address'}</h4>
+							<h4 class="visible-print">{l s='Invoice address' mod='skybankaim'}</h4>
 							{if $can_edit}
 								<form class="form-horizontal hidden-print" method="post" action="{$link->getAdminLink('AdminOrders')|escape:'html':'UTF-8'}&amp;vieworder&amp;id_order={$order->id|intval}">
 									<div class="form-group">
@@ -745,7 +745,7 @@
 											</select>
 										</div>
 										<div class="col-lg-3">
-											<button class="btn btn-default" type="submit" name="submitAddressInvoice"><i class="icon-refresh"></i> {l s='Change'}</button>
+											<button class="btn btn-default" type="submit" name="submitAddressInvoice"><i class="icon-refresh"></i> {l s='Change' mod='skybankaim'}</button>
 										</div>
 									</div>
 								</form>
@@ -755,7 +755,7 @@
 									<div class="col-sm-6">
 										<a class="btn btn-default pull-right" href="?tab=AdminAddresses&amp;id_address={$addresses.invoice->id}&amp;addaddress&amp;realedit=1&amp;id_order={$order->id}{if ($addresses.delivery->id == $addresses.invoice->id)}&amp;address_type=2{/if}&amp;back={$smarty.server.REQUEST_URI|urlencode}&amp;token={getAdminToken tab='AdminAddresses'}">
 											<i class="icon-pencil"></i>
-											{l s='Edit'}
+											{l s='Edit' mod='skybankaim'}
 										</a>
 										{displayAddressDetail address=$addresses.invoice newLine='<br />'}
 										{if $addresses.invoice->other}
@@ -779,7 +779,7 @@
 			</div>
 			<div class="panel">
 				<div class="panel-heading">
-					<i class="icon-envelope"></i> {l s='Messages'} <span class="badge">{sizeof($customer_thread_message)}</span>
+					<i class="icon-envelope"></i> {l s='Messages' mod='skybankaim'} <span class="badge">{sizeof($customer_thread_message)}</span>
 				</div>
 				{if (sizeof($messages))}
 					<div class="panel panel-highlighted">
@@ -800,7 +800,7 @@
 											{$message['elastname']|escape:'html':'UTF-8'}{else}{$message['cfirstname']|escape:'html':'UTF-8'} {$message['clastname']|escape:'html':'UTF-8'}
 										{/if}
 										{if ($message['private'] == 1)}
-											<span class="badge badge-info">{l s='Private'}</span>
+											<span class="badge badge-info">{l s='Private' mod='skybankaim'}</span>
 										{/if}
 									</h4>
 									<p class="message-item-text">
@@ -811,18 +811,18 @@
 									<a class="new_message" title="{l s='Mark this message as \'viewed\''}" href="{$smarty.server.REQUEST_URI}&amp;token={$smarty.get.token}&amp;messageReaded={$message['id_message']}">
 										<i class="icon-ok"></i>
 									</a>
-								{/if*}
+								{/if* mod='skybankaim'}
 							{/foreach}
 						</div>
 					</div>
 				{/if}
 				<div id="messages" class="well hidden-print">
-					<form action="{$smarty.server.REQUEST_URI|escape:'html':'UTF-8'}&amp;token={$smarty.get.token|escape:'html':'UTF-8'}" method="post" onsubmit="if (getE('visibility').checked == true) return confirm('{l s='Do you want to send this message to the customer?'}');">
+					<form action="{$smarty.server.REQUEST_URI|escape:'html':'UTF-8'}&amp;token={$smarty.get.token|escape:'html':'UTF-8'}" method="post" onsubmit="if (getE('visibility').checked == true) return confirm('{ mod='skybankaim'l s='Do you want to send this message to the customer?'}');">
 						<div id="message" class="form-horizontal">
 							<div class="form-group">
-								<label class="control-label col-lg-3">{l s='Choose a standard message'}</label>
+								<label class="control-label col-lg-3">{l s='Choose a standard message' mod='skybankaim'}</label>
 								<div class="col-lg-9">
-									<select class="chosen form-control" name="order_message" id="order_message" onchange="orderOverwriteMessage(this, '{l s='Do you want to overwrite your existing message?'}')">
+									<select class="chosen form-control" name="order_message" id="order_message" onchange="orderOverwriteMessage(this, '{ mod='skybankaim'l s='Do you want to overwrite your existing message?'}')">
 										<option value="0" selected="selected">-</option>
 										{foreach from=$orderMessages item=orderMessage}
 										<option value="{$orderMessage['message']|escape:'html':'UTF-8'}">{$orderMessage['name']}</option>
@@ -830,7 +830,7 @@
 									</select>
 									<p class="help-block">
 										<a href="{$link->getAdminLink('AdminOrderMessage')|escape:'html':'UTF-8'}">
-											{l s='Configure predefined messages'}
+											{l s='Configure predefined messages' mod='skybankaim'}
 											<i class="icon-external-link"></i>
 										</a>
 									</p>
@@ -838,16 +838,16 @@
 							</div>
 
 							<div class="form-group">
-								<label class="control-label col-lg-3">{l s='Display to customer?'}</label>
+								<label class="control-label col-lg-3">{l s='Display to customer?' mod='skybankaim'}</label>
 								<div class="col-lg-9">
 									<span class="switch prestashop-switch fixed-width-lg">
 										<input type="radio" name="visibility" id="visibility_on" value="0" />
 										<label for="visibility_on">
-											{l s='Yes'}
+											{l s='Yes' mod='skybankaim'}
 										</label>
 										<input type="radio" name="visibility" id="visibility_off" value="1" checked="checked" /> 
 										<label for="visibility_off">
-											{l s='No'}
+											{l s='No' mod='skybankaim'}
 										</label>
 										<a class="slide-button btn"></a>
 									</span>
@@ -855,7 +855,7 @@
 							</div>
 
 							<div class="form-group">
-								<label class="control-label col-lg-3">{l s='Message'}</label>
+								<label class="control-label col-lg-3">{l s='Message' mod='skybankaim'}</label>
 								<div class="col-lg-9">
 									<textarea id="txt_msg" class="textarea-autosize" name="message">{Tools::getValue('message')|escape:'html':'UTF-8'}</textarea>
 									<p id="nbchars"></p>
@@ -866,10 +866,10 @@
 							<input type="hidden" name="id_order" value="{$order->id}" />
 							<input type="hidden" name="id_customer" value="{$order->id_customer}" />
 							<button type="submit" id="submitMessage" class="btn btn-primary pull-right" name="submitMessage">
-								{l s='Send message'}
+								{l s='Send message' mod='skybankaim'}
 							</button>
 							<a class="btn btn-default" href="{$link->getAdminLink('AdminCustomerThreads')|escape:'html':'UTF-8'}">
-								{l s='Show all messages'}
+								{l s='Show all messages' mod='skybankaim'}
 								<i class="icon-external-link"></i>
 							</a>
 						</div>
@@ -881,7 +881,7 @@
 
 	<div class="row" id="start_products">
 		<div class="col-lg-12">
-			<form class="container-command-top-spacing" action="{$current_index}&amp;vieworder&amp;token={$smarty.get.token|escape:'html':'UTF-8'}&amp;id_order={$order->id|intval}" method="post" onsubmit="return orderDeleteProduct('{l s='This product cannot be returned.'}', '{l s='Quantity to cancel is greater than quantity available.'}');">
+			<form class="container-command-top-spacing" action="{$current_index}&amp;vieworder&amp;token={$smarty.get.token|escape:'html':'UTF-8'}&amp;id_order={$order->id|intval}" method="post" onsubmit="return orderDeleteProduct('{ mod='skybankaim'l s='This product cannot be returned.'}', '{ mod='skybankaim'l s='Quantity to cancel is greater than quantity available.'}');">
 				<input type="hidden" name="id_order" value="{$order->id}" />
 				<div style="display: none">
 					<input type="hidden" value="{$order->getWarehouseList()|implode}" id="warehouse_list" />
@@ -890,20 +890,20 @@
 				<div class="panel">
 					<div class="panel-heading">
 						<i class="icon-shopping-cart"></i>
-						{l s='Products'} <span class="badge">{$products|@count}</span>
+						{l s='Products' mod='skybankaim'} <span class="badge">{$products|@count}</span>
 					</div>
 					<div id="refundForm">
 					<!--
-						<a href="#" class="standard_refund"><img src="../img/admin/add.gif" alt="{l s='Process a standard refund'}" /> {l s='Process a standard refund'}</a>
-						<a href="#" class="partial_refund"><img src="../img/admin/add.gif" alt="{l s='Process a partial refund'}" /> {l s='Process a partial refund'}</a>
+						<a href="#" class="standard_refund"><img src="../img/admin/add.gif" alt="{ mod='skybankaim'l s='Process a standard refund'}" /> { mod='skybankaim'l s='Process a standard refund'}</a>
+						<a href="#" class="partial_refund"><img src="../img/admin/add.gif" alt="{ mod='skybankaim'l s='Process a partial refund'}" /> { mod='skybankaim'l s='Process a partial refund'}</a>
 					-->
 					</div>
 
 					{capture "TaxMethod"}
 						{if ($order->getTaxCalculationMethod() == $smarty.const.PS_TAX_EXC)}
-							{l s='tax excluded.'}
+							{l s='tax excluded.' mod='skybankaim'}
 						{else}
-							{l s='tax included.'}
+							{l s='tax included.' mod='skybankaim'}
 						{/if}
 					{/capture}
 					<div class="table-responsive">
@@ -911,20 +911,20 @@
 							<thead>
 								<tr>
 									<th></th>
-									<th><span class="title_box ">{l s='Product'}</span></th>
+									<th><span class="title_box ">{l s='Product' mod='skybankaim'}</span></th>
 									<th>
-										<span class="title_box ">{l s='Unit Price'}</span>
+										<span class="title_box ">{l s='Unit Price' mod='skybankaim'}</span>
 										<small class="text-muted">{$smarty.capture.TaxMethod}</small>
 									</th>
-									<th class="text-center"><span class="title_box ">{l s='Qty'}</span></th>
-									{if $display_warehouse}<th><span class="title_box ">{l s='Warehouse'}</span></th>{/if}
-									{if ($order->hasBeenPaid())}<th class="text-center"><span class="title_box ">{l s='Refunded'}</span></th>{/if}
+									<th class="text-center"><span class="title_box ">{l s='Qty' mod='skybankaim'}</span></th>
+									{if $display_warehouse}<th><span class="title_box ">{l s='Warehouse' mod='skybankaim'}</span></th>{/if}
+									{if ($order->hasBeenPaid())}<th class="text-center"><span class="title_box ">{l s='Refunded' mod='skybankaim'}</span></th>{/if}
 									{if ($order->hasBeenDelivered() || $order->hasProductReturned())}
-										<th class="text-center"><span class="title_box ">{l s='Returned'}</span></th>
+										<th class="text-center"><span class="title_box ">{l s='Returned' mod='skybankaim'}</span></th>
 									{/if}
-									{if $stock_management}<th class="text-center"><span class="title_box ">{l s='Available quantity'}</span></th>{/if}
+									{if $stock_management}<th class="text-center"><span class="title_box ">{l s='Available quantity' mod='skybankaim'}</span></th>{/if}
 									<th>
-										<span class="title_box ">{l s='Total'}</span>
+										<span class="title_box ">{l s='Total' mod='skybankaim'}</span>
 										<small class="text-muted">{$smarty.capture.TaxMethod}</small>
 									</th>
 									<th style="display: none;" class="add_product_fields"></th>
@@ -932,15 +932,15 @@
 									<th style="display: none;" class="standard_refund_fields">
 										<i class="icon-minus-sign"></i>
 										{if ($order->hasBeenDelivered() || $order->hasBeenShipped())}
-											{l s='Return'}
+											{l s='Return' mod='skybankaim'}
 										{elseif ($order->hasBeenPaid())}
-											{l s='Refund'}
+											{l s='Refund' mod='skybankaim'}
 										{else}
-											{l s='Cancel'}
+											{l s='Cancel' mod='skybankaim'}
 										{/if}
 									</th>
 									<th style="display:none" class="partial_refund_fields">
-										<span class="title_box ">{l s='Partial refund'}</span>
+										<span class="title_box ">{l s='Partial refund' mod='skybankaim'}</span>
 									</th>
 									{if !$order->hasBeenDelivered()}
 									<th></th>
@@ -966,22 +966,22 @@
 					{if !$order->hasBeenDelivered()}
 						<button type="button" id="add_product" class="btn btn-default">
 							<i class="icon-plus-sign"></i>
-							{l s='Add a product'}
+							{l s='Add a product' mod='skybankaim'}
 						</button>
 					{/if}
 						<button id="add_voucher" class="btn btn-default" type="button" >
 							<i class="icon-ticket"></i>
-							{l s='Add a new discount'}
+							{l s='Add a new discount' mod='skybankaim'}
 						</button>
 					</div>
 					{/if}
 					<div class="row">
 						<div class="col-xs-6">
 							<div class="alert alert-warning">
-								{l s='For this customer group, prices are displayed as:'}
+								{l s='For this customer group, prices are displayed as:' mod='skybankaim'}
 								<strong>{$smarty.capture.TaxMethod}</strong>
 								{if !Configuration::get('PS_ORDER_RETURN')}
-									<br/><strong>{l s='Merchandise returns are disabled'}</strong>
+									<br/><strong>{l s='Merchandise returns are disabled' mod='skybankaim'}</strong>
 								{/if}
 							</div>
 						</div>
@@ -994,12 +994,12 @@
 											<tr>
 												<th>
 													<span class="title_box ">
-														{l s='Discount name'}
+														{l s='Discount name' mod='skybankaim'}
 													</span>
 												</th>
 												<th>
 													<span class="title_box ">
-														{l s='Value'}
+														{l s='Value' mod='skybankaim'}
 													</span>
 												</th>
 												{if $can_edit}
@@ -1021,7 +1021,7 @@
 												<td>
 													<a href="{$current_index}&amp;submitDeleteVoucher&amp;id_order_cart_rule={$discount['id_order_cart_rule']}&amp;id_order={$order->id}&amp;token={$smarty.get.token|escape:'html':'UTF-8'}">
 														<i class="icon-minus-sign"></i>
-														{l s='Delete voucher'}
+														{l s='Delete voucher' mod='skybankaim'}
 													</a>
 												</td>
 												{/if}
@@ -1051,21 +1051,21 @@
 											{assign var=order_shipping_price value=$order->total_shipping_tax_incl}
 										{/if}
 										<tr id="total_products">
-											<td class="text-right">{l s='Products:'}</td>
+											<td class="text-right">{l s='Products:' mod='skybankaim'}</td>
 											<td class="amount text-right">
 												{displayPrice price=$order_product_price currency=$currency->id}
 											</td>
 											<td class="partial_refund_fields current-edit" style="display:none;"></td>
 										</tr>
 										<tr id="total_discounts" {if $order->total_discounts_tax_incl == 0}style="display: none;"{/if}>
-											<td class="text-right">{l s='Discounts'}</td>
+											<td class="text-right">{l s='Discounts' mod='skybankaim'}</td>
 											<td class="amount text-right">
 												-{displayPrice price=$order_discount_price currency=$currency->id}
 											</td>
 											<td class="partial_refund_fields current-edit" style="display:none;"></td>
 										</tr>
 										<tr id="total_wrapping" {if $order->total_wrapping_tax_incl == 0}style="display: none;"{/if}>
-											<td class="text-right">{l s='Wrapping'}</td>
+											<td class="text-right">{l s='Wrapping' mod='skybankaim'}</td>
 											<td class="amount text-right">
 												{displayPrice price=$order_wrapping_price currency=$currency->id}
 											</td>
@@ -1073,7 +1073,7 @@
 										</tr>
 
 										<tr id="total_shipping">
-											<td class="text-right">{l s='Shipping'}</td>
+											<td class="text-right">{l s='Shipping' mod='skybankaim'}</td>
 											<td class="amount text-right" >
 												{displayPrice price=$order_shipping_price currency=$currency->id}
 											</td>
@@ -1091,14 +1091,14 @@
 
 										{if ($order->getTaxCalculationMethod() == $smarty.const.PS_TAX_EXC)}
 			 							<tr id="total_taxes">
-			 								<td class="text-right">{l s='Taxes'}</td>
+			 								<td class="text-right">{l s='Taxes' mod='skybankaim'}</td>
 			 								<td class="amount text-right" >{displayPrice price=($order->total_paid_tax_incl-$order->total_paid_tax_excl) currency=$currency->id}</td>
 			 								<td class="partial_refund_fields current-edit" style="display:none;"></td>
 			 							</tr>
 			 							{/if}
 										{assign var=order_total_price value=$order->total_paid_tax_incl}
 										<tr id="total_order">
-											<td class="text-right"><strong>{l s='Total'}</strong></td>
+											<td class="text-right"><strong>{l s='Total' mod='skybankaim'}</strong></td>
 											<td class="amount text-right">
 												<strong>{displayPrice price=$order_total_price currency=$currency->id}</strong>
 											</td>
@@ -1115,7 +1115,7 @@
 							<p class="checkbox">
 								<label for="reinjectQuantities">
 									<input type="checkbox" id="reinjectQuantities" name="reinjectQuantities" />
-									{l s='Re-stock products'}
+									{l s='Re-stock products' mod='skybankaim'}
 								</label>
 							</p>
 							{/if}
@@ -1123,26 +1123,26 @@
 							<p class="checkbox">
 								<label for="generateCreditSlip">
 									<input type="checkbox" id="generateCreditSlip" name="generateCreditSlip" onclick="toggleShippingCost()" />
-									{l s='Generate a credit card slip'}
+									{l s='Generate a credit card slip' mod='skybankaim'}
 								</label>
 							</p>
 							<p class="checkbox">
 								<label for="generateDiscount">
 									<input type="checkbox" id="generateDiscount" name="generateDiscount" onclick="toggleShippingCost()" />
-									{l s='Generate a voucher'}
+									{l s='Generate a voucher' mod='skybankaim'}
 								</label>
 							</p>
 							<p class="checkbox" id="spanShippingBack" style="display:none;">
 								<label for="shippingBack">
 									<input type="checkbox" id="shippingBack" name="shippingBack" />
-									{l s='Repay shipping costs'}
+									{l s='Repay shipping costs' mod='skybankaim'}
 								</label>
 							</p>
 							{/if}
 						</div>
 						{if (!$order->hasBeenDelivered() || ($order->hasBeenDelivered() && Configuration::get('PS_ORDER_RETURN')))}
 						<div class="row">
-							<input type="submit" name="cancelProduct" value="{if $order->hasBeenDelivered()}{l s='Return products'}{elseif $order->hasBeenPaid()}{l s='Refund products'}{else}{l s='Cancel products'}{/if}" class="btn btn-default" />
+							<input type="submit" name="cancelProduct" value="{if $order->hasBeenDelivered()}{ mod='skybankaim'l s='Return products'}{elseif $order->hasBeenPaid()}{ mod='skybankaim'l s='Refund products'}{else}{ mod='skybankaim'l s='Cancel products'}{/if}" class="btn btn-default" />
 						</div>
 						{/if}
 					</div>
@@ -1150,17 +1150,17 @@
 						<p class="checkbox">
 							<label for="reinjectQuantitiesRefund">
 								<input type="checkbox" id="reinjectQuantitiesRefund" name="reinjectQuantities" />
-								{l s='Re-stock products'}
+								{l s='Re-stock products' mod='skybankaim'}
 							</label>
 						</p>
 						<p class="checkbox">
 							<label for="generateDiscountRefund">
 								<input type="checkbox" id="generateDiscountRefund" name="generateDiscountRefund" onclick="toggleShippingCost()" />
-								{l s='Generate a voucher'}
+								{l s='Generate a voucher' mod='skybankaim'}
 							</label>
 						</p>
 						<button type="submit" name="partialRefund" class="btn btn-default">
-							<i class="icon-check"></i> {l s='Partial refund'}
+							<i class="icon-check"></i> {l s='Partial refund' mod='skybankaim'}
 						</button>
 					</div>
 				</div>
@@ -1175,15 +1175,15 @@
 			<div class="panel">
 				<div class="panel-heading">
 					<i class="icon-globe"></i>
-					{l s='Sources'} <span class="badge">{$sources|@count}</span>
+					{l s='Sources' mod='skybankaim'} <span class="badge">{$sources|@count}</span>
 				</div>
 				<ul {if sizeof($sources) > 3}style="height: 200px; overflow-y: scroll;"{/if}>
 				{foreach from=$sources item=source}
 					<li>
 						{dateFormat date=$source['date_add'] full=true}<br />
-						<b>{l s='From'}</b>{if $source['http_referer'] != ''}<a href="{$source['http_referer']}">{parse_url($source['http_referer'], $smarty.const.PHP_URL_HOST)|regex_replace:'/^www./':''}</a>{else}-{/if}<br />
-						<b>{l s='To'}</b> <a href="http://{$source['request_uri']}">{$source['request_uri']|truncate:100:'...'}</a><br />
-						{if $source['keywords']}<b>{l s='Keywords'}</b> {$source['keywords']}<br />{/if}<br />
+						<b>{l s='From' mod='skybankaim'}</b>{if $source['http_referer'] != ''}<a href="{$source['http_referer']}">{parse_url($source['http_referer'], $smarty.const.PHP_URL_HOST)|regex_replace:'/^www./':''}</a>{else}-{/if}<br />
+						<b>{l s='To' mod='skybankaim'}</b> <a href="http://{$source['request_uri']}">{$source['request_uri']|truncate:100:'...'}</a><br />
+						{if $source['keywords']}<b>{l s='Keywords' mod='skybankaim'}</b> {$source['keywords']}<br />{/if}<br />
 					</li>
 				{/foreach}
 				</ul>
@@ -1195,20 +1195,20 @@
 			<div class="panel">
 				<div class="panel-heading">
 					<i class="icon-cart"></i>
-					{l s='Linked orders'}
+					{l s='Linked orders' mod='skybankaim'}
 				</div>
 				<div class="table-responsive">
 					<table class="table">
 						<thead>
 							<tr>
 								<th>
-									{l s='Order no. '}
+									{l s='Order no. ' mod='skybankaim'}
 								</th>
 								<th>
-									{l s='Status'}
+									{l s='Status' mod='skybankaim'}
 								</th>
 								<th>
-									{l s='Amount'}
+									{l s='Amount' mod='skybankaim'}
 								</th>
 								<th></th>
 							</tr>
@@ -1228,7 +1228,7 @@
 								<td>
 									<a href="{$current_index}&amp;vieworder&amp;id_order={$brother_order->id}&amp;token={$smarty.get.token|escape:'html':'UTF-8'}">
 										<i class="icon-eye-open"></i>
-										{l s='See the order'}
+										{l s='See the order' mod='skybankaim'}
 									</a>
 								</td>
 							</tr>

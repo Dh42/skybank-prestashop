@@ -36,7 +36,7 @@ $skybankaim = new SkyBankAIM();
 /* Does the cart exist and is valid? */
 $cart = Context::getContext()->cart;
 
-if (!isset($_POST['x_invoice_num']))
+if (!Tools::getValue('x_invoice_num'))
 {
 	Logger::addLog('Missing x_invoice_num', 4);
 	die('An unrecoverable error occured: Missing parameter');
@@ -44,14 +44,14 @@ if (!isset($_POST['x_invoice_num']))
 
 if (!Validate::isLoadedObject($cart))
 {
-	Logger::addLog('Cart loading failed for cart '.(int)$_POST['x_invoice_num'], 4);
-	die('An unrecoverable error occured with the cart '.(int)$_POST['x_invoice_num']);
+	Logger::addLog('Cart loading failed for cart '.(int)Tools::getValue('x_invoice_num'), 4);
+	die('An unrecoverable error occured with the cart '.(int)Tools::getValue('x_invoice_num'));
 }
 
-if ($cart->id != $_POST['x_invoice_num'])
+if ($cart->id != Tools::getValue('x_invoice_num'))
 {
 	Logger::addLog('Conflict between cart id order and customer cart id');
-	die('An unrecoverable conflict error occured with the cart '.(int)$_POST['x_invoice_num']);
+	die('An unrecoverable conflict error occured with the cart '.(int)Tools::getValue('x_invoice_num'));
 }
 
 $customer = new Customer((int)$cart->id_customer);
@@ -67,17 +67,17 @@ $params_f = array(
 	'UserName' => Configuration::get('SKYBANK_AIM_USERNAME'),
 	'Password' => Configuration::get('SKYBANK_AIM_PASSWORD'),
 );
-if ($_POST['x_type'] == 'check')
+if (Tools::getValue('x_type')== 'check')
 {
 	$error_no = 2;
 	$url = 'https://skybank.payment-gate.net/ws/transact.asmx/ProcessCheck';
 	$extras = array(
 		'TransType' => 'Sale',
-		'CheckNum' => Tools::safeOutput($_POST['x_check_no']),
-		'TransitNum' => Tools::safeOutput($_POST['x_transit_no']),
-		'AccountNum' => Tools::safeOutput($_POST['x_account_no']),
+		'CheckNum' => Tools::safeOutput(Tools::getValue('x_check_no')),
+		'TransitNum' => Tools::safeOutput(Tools::getValue('x_transit_no')),
+		'AccountNum' => Tools::safeOutput(Tools::getValue('x_account_no')),
 		'MICR' => '',
-		'NameOnCheck' => Tools::safeOutput($_POST['nameoncheck']),
+		'NameOnCheck' => Tools::safeOutput(Tools::getValue('nameoncheck')),
 		'Amount' => (float)$cart->getOrderTotal(true, Cart::BOTH),
 		'CheckType' => 'Personal',
 		'DL' => '',
@@ -95,13 +95,13 @@ if ($_POST['x_type'] == 'check')
 	$extras = array(
 		'TransType' => $trx_type ? 'Sale' : 'Auth',
 		'MagData' => '',
-		'CardNum' => Tools::safeOutput($_POST['x_card_num']),
-		'CVNum' => Tools::safeOutput($_POST['x_card_code']),
-		'ExpDate' => Tools::safeOutput($_POST['x_exp_date_m'].$_POST['x_exp_date_y']),
-		'NameOnCard' => Tools::safeOutput($_POST['name']),
+		'CardNum' => Tools::safeOutput(Tools::getValue('x_card_num')),
+		'CVNum' => Tools::safeOutput(Tools::getValue('x_card_code')),
+		'ExpDate' => Tools::safeOutput(Tools::getValue('x_exp_date_m').Tools::getValue('x_exp_date_y')),
+		'NameOnCard' => Tools::safeOutput(Tools::getValue('name')),
 		'Amount' => number_format((float)$cart->getOrderTotal(true, Cart::BOTH), 2, '.', ''),
-		'InvNum' => (int)$_POST['x_invoice_num']+102,
-		'PNRef' => $trx_type ? (int)$_POST['x_invoice_num'] : '',
+		'InvNum' => (int)Tools::getValue('x_invoice_num')+102,
+		'PNRef' => $trx_type ? (int)Tools::getValue('x_invoice_num') : '',
 		'Street' => Tools::safeOutput($invoiceAddress->address1.' '.$invoiceAddress->address2),
 		'Zip' => Tools::safeOutput($invoiceAddress->postcode),
 		'ExtData' => '',
@@ -125,9 +125,9 @@ switch ($response->Result) // Response code
 	case 0: // Payment accepted
 		$transaction_id = $response->Message2->AuthCode;
 
-		// if($re_occur && Tools::safeOutput($_POST['x_autoShip']) > 0)
+		// if($re_occur && Tools::safeOutput(Tools::getValue('x_autoShip')) > 0)
 		// {
-		if ($_POST['x_type'] != 'check')
+		if (Tools::getValue('x_type') != 'check')
 {
 		$customerkey = Customer::getSkyBankCustomerkey($customer->id);
 		if(!$customerkey)
@@ -144,7 +144,7 @@ switch ($response->Result) // Response code
 			'Vendor' => (int)Configuration::get('SKYBANK_AIM_VENDOR'),
 			'CustomerKey' => '',
 			'CustomerID' => $customer->id,
-			'CustomerName' => Tools::safeOutput($_POST['name']),
+			'CustomerName' => Tools::safeOutput(Tools::getValue('name')),
 			'FirstName' => Tools::safeOutput($customer->firstname),
 			'LastName' => Tools::safeOutput($customer->lastname),
 			'Title' => '',
@@ -184,9 +184,9 @@ switch ($response->Result) // Response code
 			'Vendor' => (int)Configuration::get('SKYBANK_AIM_VENDOR'),
 			'CustomerKey' => $customerkey,
 			'CardInfoKey' => '',
-			'CcAccountNum' => Tools::safeOutput($_POST['x_card_num']),
-			'CcExpDate' => Tools::safeOutput($_POST['x_exp_date_m'].$_POST['x_exp_date_y']),
-			'CcNameOnCard' => Tools::safeOutput($_POST['name']),
+			'CcAccountNum' => Tools::safeOutput(Tools::getValue('x_card_num')),
+			'CcExpDate' => Tools::safeOutput(Tools::getValue('x_exp_date_m').Tools::getValue('x_exp_date_y')),
+			'CcNameOnCard' => Tools::safeOutput(Tools::getValue('name')),
 			'CcStreet' =>  Tools::safeOutput($invoiceAddress->address1.' '.$invoiceAddress->address2),
 			'CCZip' =>  Tools::safeOutput($invoiceAddress->postcode),
 			'ExtData' => '',
@@ -196,33 +196,35 @@ switch ($response->Result) // Response code
 		if(!empty($response->CcInfoKey))
 		Db::getInstance()->insert('skybankaim_card', array(
                     'id_customer' => (int)$customer->id,
-                    'card_number' => (string)substr(Tools::safeOutput($_POST['x_card_num']), -4),
-                    'card_brand' => Tools::safeOutput($_POST['x_cardType']),
-                    'card_expiration' => Tools::safeOutput($_POST['x_exp_date_m'].'/'.$_POST['x_exp_date_y']),
-                    'card_holder' => Tools::safeOutput($_POST['name']),
+                    'card_number' => (string)Tools::substr(Tools::safeOutput(Tools::getValue('x_card_num')), -4),
+                    'card_brand' => Tools::safeOutput(Tools::getValue('x_cardType')),
+                    'card_expiration' => Tools::safeOutput(Tools::getValue('x_exp_date_m').'/'.Tools::getValue('x_exp_date_y')),
+                    'card_holder' => Tools::safeOutput(Tools::getValue('name')),
                     'ccinfokey' => $response->CcInfoKey
            		 ));
 
 		$skybankaim->setTransactionDetail(array(
 			$transaction_id,
-			Tools::safeOutput($_POST['x_card_num']),
-			Tools::safeOutput($_POST['x_cardType']),
-			Tools::safeOutput($_POST['name']))
+			Tools::safeOutput(Tools::getValue('x_card_num')),
+			Tools::safeOutput(Tools::getValue('x_cardType')),
+			Tools::safeOutput(Tools::getValue('name')))
 		);
 }
 		// if check, only set to sale
-		if($_POST['x_type'] == 'check')
+		if(Tools::getValue('x_type') == 'check')
 			$trx_type = 1;
+
+		$extra_vars = array();
 		$extra_vars['transaction_id'] = $pnref.'|'.($trx_type ? 'Sale' : 'Auth');
 		$skybankaim->validateOrder((int)$cart->id,
 			$order_status, (float)$cart->getOrderTotal(true, Cart::BOTH),
 			$payment_method, $message, $extra_vars, null, false, $customer->secure_key);
-		if($re_occur && Tools::safeOutput($_POST['x_autoShip']) > 0)
+		if($re_occur && Tools::safeOutput(Tools::getValue('x_autoShip')) > 0)
 		{
 			Db::getInstance()->insert('skybankaim_autoship_order', array(
                                 'id_order'   => (int)$skybankaim->currentOrder,
-                                'order_name' => Tools::safeOutput($_POST['x_order_name']),
-                                'frequency'  => Tools::safeOutput($_POST['x_autoShip']),
+                                'order_name' => Tools::safeOutput(Tools::getValue('x_order_name')),
+                                'frequency'  => Tools::safeOutput(Tools::getValue('x_autoShip')),
 				'last_run_date'     =>  date('Y-m-d'),
 				'active'     => 1
                         ));

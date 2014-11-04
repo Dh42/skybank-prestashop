@@ -625,9 +625,9 @@ class AdminReOccurOrdersController extends ModuleAdminController
 				{
 					$amount = 0;
 					$order_detail_list = array();
-					foreach ($_POST['partialRefundProduct'] as $id_order_detail => $amount_detail)
+					foreach (Tools::getValue('partialRefundProduct') as $id_order_detail => $amount_detail)
 					{
-						$order_detail_list[$id_order_detail]['quantity'] = (int)$_POST['partialRefundProductQuantity'][$id_order_detail];
+						$order_detail_list[$id_order_detail]['quantity'] = (int)Tools::getValue('partialRefundProductQuantity')[$id_order_detail];
 
 						if (empty($amount_detail))
 						{
@@ -703,6 +703,7 @@ class AdminReOccurOrdersController extends ModuleAdminController
 								{
 									$currency = $this->context->currency;
 									$customer = new Customer((int)($order->id_customer));
+									$params = array();
 									$params['{lastname}'] = $customer->lastname;
 									$params['{firstname}'] = $customer->firstname;
 									$params['{id_order}'] = $order->id;
@@ -1019,7 +1020,7 @@ class AdminReOccurOrdersController extends ModuleAdminController
 				$payment_module->validateOrder(
 					(int)$cart->id, (int)$id_order_state,
 					$cart->getOrderTotal(true, Cart::BOTH), $payment_module->displayName, $this->l('Manual order -- Employee:').' '.
-					substr($employee->firstname, 0, 1).'. '.$employee->lastname, array(), null, false, $cart->secure_key
+					Tools::substr($employee->firstname, 0, 1).'. '.$employee->lastname, array(), null, false, $cart->secure_key
 				);
 				if ($payment_module->currentOrder)
 					Tools::redirectAdmin(self::$currentIndex.'&id_order='.$payment_module->currentOrder.'&vieworder'.'&token='.$this->token);
@@ -1925,9 +1926,9 @@ class AdminReOccurOrdersController extends ModuleAdminController
 				'error' => Tools::displayError('You cannot add products to delivered orders. ')
 			)));
 
-		$product_informations = $_POST['add_product'];
-		if (isset($_POST['add_invoice']))
-			$invoice_informations = $_POST['add_invoice'];
+		$product_informations = Tools::getValue('add_product');
+		if (isset(Tools::getValue('add_invoice')))
+			$invoice_informations = Tools::getValue('add_invoice');
 		else
 			$invoice_informations = array();
 		$product = new Product($product_informations['product_id'], false, $order->id_lang);
@@ -2633,8 +2634,7 @@ class AdminReOccurOrdersController extends ModuleAdminController
 		// Reinject product
 		$reinjectable_quantity = (int)$order_detail->product_quantity - (int)$order_detail->product_quantity_reinjected;
 		$quantity_to_reinject = $qty_cancel_product > $reinjectable_quantity ? $reinjectable_quantity : $qty_cancel_product;
-		// @since 1.5.0 : Advanced Stock Management
-		$product_to_inject = new Product($order_detail->product_id, false, (int)$this->context->language->id, (int)$order_detail->id_shop);
+
 
 		$product = new Product($order_detail->product_id, false, (int)$this->context->language->id, (int)$order_detail->id_shop);
 

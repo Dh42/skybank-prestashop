@@ -98,7 +98,7 @@ class SkyBankAimOrdersModuleFrontController extends ModuleFrontController
 						$wishlist->id_customer = (int)$this->context->customer->id;
 						list($us, $s) = explode(' ', microtime());
 						srand($s * $us);
-						$wishlist->token = strtoupper(substr(sha1(uniqid(rand(), true)._COOKIE_KEY_.$this->context->customer->id), 0, 16));
+						$wishlist->token = Tools::strtoupper(Tools::substr(sha1(uniqid(rand(), true)._COOKIE_KEY_.$this->context->customer->id), 0, 16));
 						$wishlist->add();
 						Mail::Send(
 							$this->context->language->id,
@@ -111,7 +111,7 @@ class SkyBankAimOrdersModuleFrontController extends ModuleFrontController
 							$this->context->customer->email,
 							$this->context->customer->firstname.' '.$this->context->customer->lastname,
 							null,
-							strval(Configuration::get('PS_SHOP_NAME')),
+							(string)(Configuration::get('PS_SHOP_NAME')),
 							null,
 							null,
 							$this->module->getLocalPath().'mails/');

@@ -5,7 +5,7 @@ include(dirname(__FILE__). '/skybankaim.php');
 
 $skybankaim = new SkyBankAIM();
 	// $_GET['token'] = '74b0283c782f6e4416df4755fc233447';
-if (isset($_GET['token']))
+if (Tools::getValue('token'))
 {
 
 
@@ -33,6 +33,7 @@ echo 'Autoship Order #'.$order['id_order'].'<br>' ;
 				'ExtData' => '',
 			);
 			$response = $skybankaim->getResponse($url, $params);
+			$extra_vars = array();
 			$extra_vars['transaction_id'] = $response->PNRef.'|'.(Configuration::get('SKYBANK_AIM_SALE') ? 'Sale' : 'Auth');
 
             if ($response->Result == 0)

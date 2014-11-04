@@ -1,28 +1,28 @@
 <div id="orders">
     {capture name=path}
-        <a href="{$link->getPageLink('my-account', true)|escape:'html'}">{l s='My account' mod='skybankaim'}</a>
+        <a href="{$link->getPageLink('my-account', true)|escape:'html'}">{l s='My account' mod='skybankaim' mod='skybankaim'}</a>
         <span class="navigation-pipe">{$navigationPipe}</span>
-        <a href="{$link->getModuleLink('skybankaim', 'orders')|escape:'html'}">{l s='Manage Autoship Orders' mod='skybankaim'}</a>
+        <a href="{$link->getModuleLink('skybankaim', 'orders')|escape:'html'}">{l s='Manage Autoship Orders' mod='skybankaim' mod='skybankaim'}</a>
                 {if isset($current_wishlist)}
                 <span class="navigation-pipe">{$navigationPipe}</span>
                 {$current_wishlist.name}
                 {/if}
     {/capture}
 
-    <h1 class="page-heading bottom-indent">{l s='Manage Autoship Orders'}</h1>
-    <p class="info-title">{l s='Here are the autoship orders you\'ve placed since your account was created.'}</p>
+    <h1 class="page-heading bottom-indent">{l s='Manage Autoship Orders' mod='skybankaim'}</h1>
+    <p class="info-title">{l s='Here are the autoship orders you\'ve placed since your account was created.' mod='skybankaim'}</p>
     <div class="block-center" id="block-history">
         {if $orders && count($orders)}
                 <table id="order-list" class="table table-bordered footab">
                         <thead>
                                 <tr>
-                                        <th class="first_item" data-sort-ignore="true">{l s='Order name'}</th>
-                                        <th class="item">{l s='Frequency'}</th>
-                                        <th data-hide="phone" class="item">{l s='Total price'}</th>
-                                        <th data-sort-ignore="true" data-hide="phone,tablet" class="item">{l s='Payment'}</th>
-                                        <th class="item">{l s='Cancel'}</th>
-                                        <th class="item">{l s='Change'}</th>
-                                        <th data-sort-ignore="true" data-hide="phone,tablet" class="item">{l s='Invoice'}</th>
+                                        <th class="first_item" data-sort-ignore="true">{l s='Order name' mod='skybankaim'}</th>
+                                        <th class="item">{l s='Frequency' mod='skybankaim'}</th>
+                                        <th data-hide="phone" class="item">{l s='Total price' mod='skybankaim'}</th>
+                                        <th data-sort-ignore="true" data-hide="phone,tablet" class="item">{l s='Payment' mod='skybankaim'}</th>
+                                        <th class="item">{l s='Cancel' mod='skybankaim'}</th>
+                                        <th class="item">{l s='Change' mod='skybankaim'}</th>
+                                        <th data-sort-ignore="true" data-hide="phone,tablet" class="item">{l s='Invoice' mod='skybankaim'}</th>
                                         <th data-sort-ignore="true" data-hide="phone,tablet" class="last_item">&nbsp;</th>
                                 </tr>
                         </thead>
@@ -47,15 +47,15 @@
                                                 </td>
 						<td class="history_method">{$order.payment|escape:'html':'UTF-8'}</td>
                                                 <td class="history_state">
-							<a  href="javascript:cancelAutoship({$order.id_order|intval});" class="btn btn-default button button-small "><span>{l s='Cancel'}</span></a>
+							<a  href="javascript:cancelAutoship({$order.id_order|intval});" class="btn btn-default button button-small "><span>{l s='Cancel' mod='skybankaim'}</span></a>
                                                 </td>
                                                 <td class="history_state">
-							<a  href="javascript:changeAutoship({$order.id_order|intval});" class="btn btn-default button button-small"><span>{l s='Update Frequency'}</span></a>
+							<a  href="javascript:changeAutoship({$order.id_order|intval});" class="btn btn-default button button-small"><span>{l s='Update Frequency' mod='skybankaim'}</span></a>
                                                 </td>
                                                 <td class="history_invoice">
                                                         {if (isset($order.invoice) && $order.invoice && isset($order.invoice_number) && $order.invoice_number) && isset($invoiceAllowed) && $invoiceAllowed == true}
-                                                                <a class="link-button" href="{$link->getPageLink('pdf-invoice', true, NULL, "id_order={$order.id_order}")|escape:'html':'UTF-8'}" title="{l s='Invoice'}" target="_blank">
-                                                                        <i class="icon-file-text large"></i>{l s='PDF'}
+                                                                <a class="link-button" href="{$link->getPageLink('pdf-invoice', true, NULL, "id_order={$order.id_order}")|escape:'html':'UTF-8'}" title="{ mod='skybankaim'l s='Invoice'}" target="_blank">
+                                                                        <i class="icon-file-text large"></i>{l s='PDF' mod='skybankaim'}
                                                                 </a>
                                                         {else}
                                                                 -
@@ -64,16 +64,16 @@
 						<td class="history_detail">
                                                         <a class="btn btn-default button button-small" href="javascript:showOrder(1, {$order.id_order|intval}, '{$link->getPageLink('order-detail', true)|escape:'html':'UTF-8'}');">
                                                                 <span>
-                                                                        {l s='Details'}<i class="icon-chevron-right right"></i>
+                                                                        {l s='Details' mod='skybankaim'}<i class="icon-chevron-right right"></i>
                                                                 </span>
                                                         </a>
                                                         {if isset($opc) && $opc}
-                                                                <a class="link-button" href="{$link->getPageLink('order-opc', true, NULL, "submitReorder&id_order={$order.id_order|intval}")|escape:'html':'UTF-8'}" title="{l s='Reorder'}">
+                                                                <a class="link-button" href="{$link->getPageLink('order-opc', true, NULL, "submitReorder&id_order={$order.id_order|intval}")|escape:'html':'UTF-8'}" title="{ mod='skybankaim'l s='Reorder'}">
                                                         {else}
-                                                                <a class="link-button" href="{$link->getPageLink('order', true, NULL, "submitReorder&id_order={$order.id_order|intval}")|escape:'html':'UTF-8'}" title="{l s='Reorder'}">
+                                                                <a class="link-button" href="{$link->getPageLink('order', true, NULL, "submitReorder&id_order={$order.id_order|intval}")|escape:'html':'UTF-8'}" title="{ mod='skybankaim'l s='Reorder'}">
                                                         {/if}
                                                                 {if isset($reorderingAllowed) && $reorderingAllowed}
-                                                                        <i class="icon-refresh"></i>{l s='Reorder'}
+                                                                        <i class="icon-refresh"></i>{l s='Reorder' mod='skybankaim'}
                                                                 {/if}
                                                         </a>
                                                 </td>

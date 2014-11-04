@@ -193,7 +193,7 @@ class SkyBankAIM extends PaymentModule
 		if ($params['objOrder']->getCurrentState() != Configuration::get('PS_OS_ERROR'))
 		{
 			Configuration::updateValue('SKYBANKAIM_CONFIGURATION_OK', true);
-			$this->context->smarty->assign(array('status' => 'ok', 'id_order' => intval($params['objOrder']->id)));
+			$this->context->smarty->assign(array('status' => 'ok', 'id_order' => (int)($params['objOrder']->id)));
 		}
 		else
 			$this->context->smarty->assign('status', 'failed');
@@ -279,7 +279,7 @@ class SkyBankAIM extends PaymentModule
 		if (!Validate::isLoadedObject($currency))
 			return false;
 
-		if (Configuration::get('PS_SSL_ENABLED') || (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off'))
+		if (Configuration::get('PS_SSL_ENABLED') || (!empty($_SERVER['HTTPS']) && Tools::strtolower($_SERVER['HTTPS']) != 'off'))
 		{
 			$isFailed = Tools::getValue('skybankerror');
 
@@ -359,7 +359,7 @@ class SkyBankAIM extends PaymentModule
 			$this->pcc->transaction_id = (string)$response[0];
 
 			// 50 => Card number (XXXX0000)
-			$this->pcc->card_number = (string)substr($response[1], -4);
+			$this->pcc->card_number = (string)Tools::substr($response[1], -4);
 
 			// 51 => Card Mark (Visa, Master card)
 			$this->pcc->card_brand = (string)$response[2];
@@ -412,7 +412,6 @@ class SkyBankAIM extends PaymentModule
 		if (!Validate::isLoadedObject($order))
 			return false;
 
-		$products = $order->getProducts();
 		$currency = new Currency((int)$order->id_currency);
 		if (!Validate::isLoadedObject($currency))
 			$this->_errors[] = $this->l('Not a valid currency');
@@ -535,8 +534,6 @@ class SkyBankAIM extends PaymentModule
 
 
         if (Tools::isSubmit('submitRefund')) {
-        	$customer = new Customer($order->id_customer);
-        	$address = new Address($order->id_address_invoice);
 
         	$pnref = str_replace('|Sale', '', $order_payment[0]->transaction_id);
 			$pnref = str_replace('|Auth', '', $pnref);

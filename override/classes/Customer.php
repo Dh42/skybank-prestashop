@@ -17,7 +17,7 @@ class Customer extends CustomerCore
                 	FROM `'._DB_PREFIX_.'skybankaim_card`
                 	WHERE `id_customer` = '.(int)$id_customer);
         }
-        static public function checkSkyBankCards($id_customer, $card) {
+        static public function checkSkyBankCards($id_customer, $card) { // Fabio: not sure about removing 2nd param here
                 $result = Db::getInstance()->ExecuteS('
                 	SELECT *
                 	FROM `'._DB_PREFIX_.'skybankaim_card`
