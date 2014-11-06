@@ -1,6 +1,6 @@
 <?php
-/*
-* 2007-2014 PrestaShop
+/**
+* 2014 SkyBank Financial
 *
 * NOTICE OF LICENSE
 *
@@ -10,7 +10,7 @@
 * http://opensource.org/licenses/afl-3.0.php
 * If you did not receive a copy of the license and are unable to
 * obtain it through the world-wide-web, please send an email
-* to license@prestashop.com so we can send you a copy immediately.
+* to license@skybankfinancial.com so we can send you a copy immediately.
 *
 * DISCLAIMER
 *
@@ -18,10 +18,10 @@
 * versions in the future. If you wish to customize PrestaShop for your
 * needs please refer to http://www.prestashop.com for more information.
 *
-*  @author PrestaShop SA <contact@prestashop.com>
-*  @copyright  2007-2014 PrestaShop SA
+*  @author SkyBank Financial <contact@skybankfinancial.com>
+*  @copyright  2014 SkyBank Financial
 *  @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
-*  International Registered Trademark & Property of PrestaShop SA
+*  International Registered Trademark & Property of SkyBank Financial
 */
 
 /**
@@ -39,20 +39,20 @@ class SkyBankAimOrdersModuleFrontController extends ModuleFrontController
 		include_once($this->module->getLocalPath().'AutoShipOrders.php');
 	}
 	public function setMedia()
-        {
-                parent::setMedia();
-                $this->addCSS(array(
-                        _THEME_CSS_DIR_.'history.css',
-                        _THEME_CSS_DIR_.'addresses.css'
-                ));
-                $this->addJS(array(
-                        _THEME_JS_DIR_.'history.js',
-                        _THEME_JS_DIR_.'tools.js' // retro compat themes 1.5
-                ));
-                $this->addJqueryPlugin('footable');
-                $this->addJqueryPlugin('footable-sort');
-                $this->addJqueryPlugin('scrollTo');
-        }
+	{
+		parent::setMedia();
+		$this->addCSS(array(
+			_THEME_CSS_DIR_.'history.css',
+			_THEME_CSS_DIR_.'addresses.css'
+			));
+		$this->addJS(array(
+			_THEME_JS_DIR_.'history.js',
+			_THEME_JS_DIR_.'tools.js' // retro compat themes 1.5
+			));
+		$this->addJqueryPlugin('footable');
+		$this->addJqueryPlugin('footable-sort');
+		$this->addJqueryPlugin('scrollTo');
+	}
 
 	/**
 	 * @see FrontController::initContent()
@@ -111,7 +111,7 @@ class SkyBankAimOrdersModuleFrontController extends ModuleFrontController
 							$this->context->customer->email,
 							$this->context->customer->firstname.' '.$this->context->customer->lastname,
 							null,
-							(string)(Configuration::get('PS_SHOP_NAME')),
+							(string)Configuration::get('PS_SHOP_NAME'),
 							null,
 							null,
 							$this->module->getLocalPath().'mails/');
@@ -124,7 +124,7 @@ class SkyBankAimOrdersModuleFrontController extends ModuleFrontController
 				AutoShipOrders::addCardToWishlist($this->context->customer->id, Tools::getValue('id_wishlist'), $this->context->language->id);
 			elseif ($delete && empty($id_wishlist) === false)
 			{
-				$wishlist = new AutoShipOrders((int)($id_wishlist));
+				$wishlist = new AutoShipOrders((int)$id_wishlist);
 				if (Validate::isLoadedObject($wishlist))
 					$wishlist->delete();
 				else
