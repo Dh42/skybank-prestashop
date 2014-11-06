@@ -127,7 +127,7 @@
 					<i class="icon-credit-card"></i>
 					{l s='Order' mod='skybankaim'}
 					<span class="badge">{$order->reference}</span>
-					<span class="badge">{l s="#"}{$order->id}</span>
+					<span class="badge">{l s="#" mod='skybankaim'}{$order->id}</span>
 					<div class="panel-heading-action">
 						<div class="btn-group">
 							<a class="btn btn-default" href="{$link->getAdminLink('AdminOrders')|escape:'html':'UTF-8'}&amp;vieworder&amp;id_order={$previousOrder|intval}">
@@ -396,7 +396,7 @@
 			<div id="formAddPaymentPanel" class="panel">
 				<div class="panel-heading">
 					<i class="icon-money"></i>
-					{l s="Payment"} <span class="badge">{$order->getOrderPayments()|@count}</span>
+					{l s="Payment" mod='skybankaim'} <span class="badge">{$order->getOrderPayments()|@count}</span>
 				</div>
 				{if count($order->getOrderPayments()) > 0}
 					<p class="alert alert-danger" style="{if round($orders_total_paid_tax_incl, 2) == round($total_paid, 2) || $currentState->id == 6}display: none;{/if}">
@@ -808,7 +808,7 @@
 									</p>
 								</div>
 								{*if ($message['is_new_for_me'])}
-									<a class="new_message" title="{l s='Mark this message as \'viewed\''}" href="{$smarty.server.REQUEST_URI}&amp;token={$smarty.get.token}&amp;messageReaded={$message['id_message']}">
+									<a class="new_message" title="{l s='Mark this message as \'viewed\'' mod='skybankaim'}" href="{$smarty.server.REQUEST_URI}&amp;token={$smarty.get.token}&amp;messageReaded={$message['id_message']}">
 										<i class="icon-ok"></i>
 									</a>
 								{/if* mod='skybankaim'}
