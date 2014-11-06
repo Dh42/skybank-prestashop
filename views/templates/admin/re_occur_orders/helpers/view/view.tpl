@@ -33,7 +33,7 @@
 	var id_currency = {$order->id_currency|escape:'html'};
 	var id_customer = {$order->id_customer|intval};
 	{assign var=PS_TAX_ADDRESS_TYPE value=Configuration::get('PS_TAX_ADDRESS_TYPE')}
-	var id_address = {$order->$PS_TAX_ADDRESS_TYPE};
+	var id_address = {$order->$PS_TAX_ADDRESS_TYPE|intval};
 	var currency_sign = "{$currency->sign|escape:'html'}";
 	var currency_format = "{$currency->format|escape:'html'}";
 	var currency_blank = "{$currency->blank|escape:'html'}";
@@ -50,7 +50,7 @@
 	var has_voucher = {if count($discounts)}1{else}0{/if};
 	{foreach from=$states item=state}
 		{if (!$currentState->shipped && $state['shipped'])}
-			statesShipped.push({$state['id_order_state']});
+			statesShipped.push({$state['id_order_state']|intval});
 		{/if}
 	{/foreach}
 	</script>
@@ -108,9 +108,9 @@
 					<div class="form-group">
 						<label class="control-label col-lg-2">{l s='Auto-Ship every' mod='skybankaim'}</label>
 						<div class="col-lg-3" style="width:400px;">
-							 <input type="text" name="autoship_frequency" value="{$autoship_frequency}" style="width:70px;float:left"/><p style="margin-top:7px;margin-left:10px;float:left;padding-right:10px"> {l s='Days' mod='skybankaim'}</p>
-							 <input class="btn btn-default" type="submit" name="submitAutoship" value="{ mod='skybankaim'l s='Change Frequency'}">
-							 <input class="btn btn-default" type="submit" name="cancelAutoship" value="{ mod='skybankaim'l s='Cancel Auto-Ship'}">
+							 <input type="text" name="autoship_frequency" value="{$autoship_frequency|intval}" style="width:70px;float:left"/><p style="margin-top:7px;margin-left:10px;float:left;padding-right:10px"> {l s='Days' mod='skybankaim'}</p>
+							 <input class="btn btn-default" type="submit" name="submitAutoship" value="{l s='Change Frequency' mod='skybankaim'}">
+							 <input class="btn btn-default" type="submit" name="cancelAutoship" value="{l s='Cancel Auto-Ship' mod='skybankaim'}">
 						</div>
 					</div>
 					
@@ -126,8 +126,8 @@
 				<div class="panel-heading">
 					<i class="icon-credit-card"></i>
 					{l s='Order' mod='skybankaim'}
-					<span class="badge">{$order->reference}</span>
-					<span class="badge">{l s="#" mod='skybankaim'}{$order->id}</span>
+					<span class="badge">{$order->reference|escape:'htmlall'}</span>
+					<span class="badge">{l s="#" mod='skybankaim'}{$order->id|intval}</span>
 					<div class="panel-heading-action">
 						<div class="btn-group">
 							<a class="btn btn-default" href="{$link->getAdminLink('AdminOrders')|escape:'html':'UTF-8'}&amp;vieworder&amp;id_order={$previousOrder|intval}">
@@ -245,7 +245,7 @@
 										<option value="{$state['id_order_state']|intval}"{if $state['id_order_state'] == $currentState->id} selected="selected" disabled="disabled"{/if}>{$state['name']|escape}</option>
 									{/foreach}
 									</select>
-									<input type="hidden" name="id_order" value="{$order->id}" />
+									<input type="hidden" name="id_order" value="{$order->id|intval}" />
 								</div>
 								<div class="col-lg-3">
 									<button type="submit" name="submitState" class="btn btn-primary">
@@ -340,9 +340,9 @@
 									<tbody>
 										{foreach from=$order->getReturn() item=line}
 										<tr>
-											<td>{$line.date_add}</td>
-											<td>{$line.type}</td>
-											<td>{$line.state_name}</td>
+											<td>{$line.date_add|escape:'htmlall'}</td>
+											<td>{$line.type|escape:'htmlall'}</td>
+											<td>{$line.state_name|escape:'htmlall'}</td>
 											<td class="actions">
 												<span id="shipping_number_show">{if isset($line.url) && isset($line.tracking_number)}<a href="{$line.url|replace:'@':$line.tracking_number|escape:'html':'UTF-8'}">{$line.tracking_number}</a>{elseif isset($line.tracking_number)}{$line.tracking_number}{/if}</span>
 												{if $line.can_edit}
@@ -455,32 +455,32 @@
 									<td colspan="5">
 										<p>
 											<b>{l s='Card Number' mod='skybankaim'}</b>&nbsp;
-											{if $payment->card_number}
-												{$payment->card_number}
+											{if $payment->card_number|escape:'htmlall'}
+												{$payment->card_number|escape:'htmlall'}
 											{else}
 												<i>{l s='Not defined' mod='skybankaim'}</i>
 											{/if}
 										</p>
 										<p>
 											<b>{l s='Card Brand' mod='skybankaim'}</b>&nbsp;
-											{if $payment->card_brand}
-												{$payment->card_brand}
+											{if $payment->card_brand|escape:'htmlall'}
+												{$payment->card_brand|escape:'htmlall'}
 											{else}
 												<i>{l s='Not defined' mod='skybankaim'}</i>
 											{/if}
 										</p>
 										<p>
 											<b>{l s='Card Expiration' mod='skybankaim'}</b>&nbsp;
-											{if $payment->card_expiration}
-												{$payment->card_expiration}
+											{if $payment->card_expiration|escape:'htmlall'}
+												{$payment->card_expiration|escape:'htmlall'}
 											{else}
 												<i>{l s='Not defined' mod='skybankaim'}</i>
 											{/if}
 										</p>
 										<p>
 											<b>{l s='Card Holder' mod='skybankaim'}</b>&nbsp;
-											{if $payment->card_holder}
-												{$payment->card_holder}
+											{if $payment->card_holder|escape:'htmlall'}
+												{$payment->card_holder|escape:'htmlall'}
 											{else}
 												<i>{l s='Not defined' mod='skybankaim'}</i>
 											{/if}
@@ -500,7 +500,7 @@
 								<tr class="current-edit hidden-print">
 									<td>
 										<div class="input-group fixed-width-xl">
-											<input type="text" name="payment_date" class="datepicker" value="{date('Y-m-d')}" />
+											<input type="text" name="payment_date" class="datepicker" value="{date('Y-m-d')|escape:'htmlall'}" />
 											<div class="input-group-addon">
 												<i class="icon-calendar-o"></i>
 											</div>
@@ -509,7 +509,7 @@
 									<td>
 										<select name="payment_method" class="payment_method">
 										{foreach from=$payment_methods item=payment_method}
-											<option value="{$payment_method}">{$payment_method}</option>
+											<option value="{$payment_method|escape:'htmlall'}">{$payment_method|escape:'htmlall'}</option>
 										{/foreach}
 										</select>
 									</td>
@@ -528,7 +528,7 @@
 										{if count($invoices_collection) > 0}
 											<select name="payment_invoice" id="payment_invoice">
 											{foreach from=$invoices_collection item=invoice}
-												<option value="{$invoice->id}" selected="selected">{$invoice->getInvoiceNumberFormatted($current_id_lang, $order->id_shop)}</option>
+												<option value="{$invoice->id|intval}" selected="selected">{$invoice->getInvoiceNumberFormatted($current_id_lang, $order->id_shop|intval)}</option>
 											{/foreach}
 											</select>
 										{/if}
@@ -550,8 +550,8 @@
 							<div class="col-lg-6">
 								<select name="new_currency">
 								{foreach from=$currencies item=currency_change}
-									{if $currency_change['id_currency'] != $order->id_currency}
-									<option value="{$currency_change['id_currency']}">{$currency_change['name']} - {$currency_change['sign']}</option>
+									{if $currency_change['id_currency']|intval != $order->id_currency|intval}
+									<option value="{$currency_change['id_currency']|intval}">{$currency_change['name']|escape:'htmlall'} - {$currency_change['sign']|escape:'htmlall'}</option>
 									{/if}
 								{/foreach}
 								</select>
@@ -576,12 +576,12 @@
 							<a href="?tab=AdminCustomers&amp;id_customer={$customer->id}&amp;viewcustomer&amp;token={getAdminToken tab='AdminCustomers'}">
 								{if Configuration::get('PS_B2B_ENABLE')}{$customer->company} - {/if}
 								{$gender->name|escape:'html':'UTF-8'}
-								{$customer->firstname}
-								{$customer->lastname}
+								{$customer->firstname|escape:'htmlall'}
+								{$customer->lastname|escape:'htmlall'}
 							</a>
 						</span>
 						<span class="badge">
-							{l s='#' mod='skybankaim'}{$customer->id}
+							{l s='#' mod='skybankaim'}{$customer->id|intval}
 						</span>
 					</div>
 					<div class="row">
@@ -590,7 +590,7 @@
 								{l s='This order has been placed by a guest.' mod='skybankaim'}
 								{if (!Customer::customerExists($customer->email))}
 									<form method="post" action="index.php?tab=AdminCustomers&amp;id_customer={$customer->id}&amp;token={getAdminToken tab='AdminCustomers'}">
-										<input type="hidden" name="id_lang" value="{$order->id_lang}" />
+										<input type="hidden" name="id_lang" value="{$order->id_lang|intval}" />
 										<input class="btn btn-default" type="submit" name="submitGuestToCustomer" value="{ mod='skybankaim'l s='Transform a guest into a customer'}" />
 										<p class="help-block">{l s='This feature will generate a random password and send an email to the customer.' mod='skybankaim'}</p>
 									</form>
@@ -602,7 +602,7 @@
 							{else}
 								<dl class="well list-detail">
 									<dt>{l s='Email' mod='skybankaim'}</dt>
-										<dd><a href="mailto:{$customer->email}"><i class="icon-envelope-o"></i> {$customer->email}</a></dd>
+										<dd><a href="mailto:{$customer->email|escape:'htmlall'}"><i class="icon-envelope-o"></i> {$customer->email|escape:'htmlall'}</a></dd>
 									<dt>{l s='Account registered' mod='skybankaim'}</dt>
 										<dd class="text-muted"><i class="icon-calendar-o"></i> {dateFormat date=$customer->date_add full=true}</dd>
 									<dt>{l s='Valid orders placed' mod='skybankaim'}</dt>
@@ -611,9 +611,9 @@
 										<dd><span class="badge badge-success">{displayPrice price=Tools::ps_round(Tools::convertPrice($customerStats['total_orders'], $currency), 2) currency=$currency->id}</span></dd>
 									{if Configuration::get('PS_B2B_ENABLE')}
 										<dt>{l s='Siret' mod='skybankaim'}</dt>
-											<dd>{$customer->siret}</dd>
+											<dd>{$customer->siret|escape:'htmlall'}</dd>
 										<dt>{l s='APE' mod='skybankaim'}</dt>
-											<dd>{$customer->ape}</dd>
+											<dd>{$customer->ape|escape:'htmlall'}</dd>
 									{/if}
 								</dl>
 							{/if}
@@ -628,10 +628,10 @@
 									<i class="icon-eye-slash"></i>
 									{l s='Private note' mod='skybankaim'}
 								</div>
-								<form id="customer_note" class="form-horizontal" action="ajax.php" method="post" onsubmit="saveCustomerNote({$customer->id});return false;" >
+								<form id="customer_note" class="form-horizontal" action="ajax.php" method="post" onsubmit="saveCustomerNote({$customer->id|intval});return false;" >
 									<div class="form-group">
 										<div class="col-lg-12">
-											<textarea name="note" id="noteContent" class="textarea-autosize" onkeyup="$(this).val().length > 0 ? $('#submitCustomerNote').removeAttr('disabled') : $('#submitCustomerNote').attr('disabled', 'disabled')">{$customer->note}</textarea>
+											<textarea name="note" id="noteContent" class="textarea-autosize" onkeyup="$(this).val().length > 0 ? $('#submitCustomerNote').removeAttr('disabled') : $('#submitCustomerNote').attr('disabled', 'disabled')">{$customer->note|escape:'html'}</textarea>
 										</div>
 									</div>
 									<div class="row">
@@ -678,18 +678,18 @@
 											<div class="col-lg-9">
 												<select name="id_address">
 													{foreach from=$customer_addresses item=address}
-													<option value="{$address['id_address']}"
+													<option value="{$address['id_address']|intval}"
 														{if $address['id_address'] == $order->id_address_delivery}
 															selected="selected"
 														{/if}>
-														{$address['alias']} -
-														{$address['address1']}
-														{$address['postcode']}
-														{$address['city']}
+														{$address['alias']|escape:'htmlall'} -
+														{$address['address1']|escape:'htmlall'}
+														{$address['postcode']|escape:'htmlall'}
+														{$address['city']|escape:'htmlall'}
 														{if !empty($address['state'])}
-															{$address['state']}
+															{$address['state']|escape:'htmlall'}
 														{/if},
-														{$address['country']}
+														{$address['country']|escape:'htmlall'}
 													</option>
 													{/foreach}
 												</select>
@@ -709,7 +709,7 @@
 											</a>
 											{displayAddressDetail address=$addresses.delivery newLine='<br />'}
 											{if $addresses.delivery->other}
-												<hr />{$addresses.delivery->other}<br />
+												<hr />{$addresses.delivery->other|escape:'htmlall'}<br />
 											{/if}
 										</div>
 										<div class="col-sm-6 hidden-print">
@@ -807,11 +807,6 @@
 										{$message['message']|escape:'html':'UTF-8'|nl2br}
 									</p>
 								</div>
-								{*if ($message['is_new_for_me'])}
-									<a class="new_message" title="{l s='Mark this message as \'viewed\'' mod='skybankaim'}" href="{$smarty.server.REQUEST_URI}&amp;token={$smarty.get.token}&amp;messageReaded={$message['id_message']}">
-										<i class="icon-ok"></i>
-									</a>
-								{/if mod='skybankaim'*}
 							{/foreach}
 						</div>
 					</div>
@@ -863,8 +858,8 @@
 							</div>
 
 
-							<input type="hidden" name="id_order" value="{$order->id}" />
-							<input type="hidden" name="id_customer" value="{$order->id_customer}" />
+							<input type="hidden" name="id_order" value="{$order->id|intval}" />
+							<input type="hidden" name="id_customer" value="{$order->id_customer|intval}" />
 							<button type="submit" id="submitMessage" class="btn btn-primary pull-right" name="submitMessage">
 								{l s='Send message' mod='skybankaim'}
 							</button>
@@ -882,7 +877,7 @@
 	<div class="row" id="start_products">
 		<div class="col-lg-12">
 			<form class="container-command-top-spacing" action="{$current_index}&amp;vieworder&amp;token={$smarty.get.token|escape:'html':'UTF-8'}&amp;id_order={$order->id|intval}" method="post" onsubmit="return orderDeleteProduct('{ mod='skybankaim'l s='This product cannot be returned.'}', '{ mod='skybankaim'l s='Quantity to cancel is greater than quantity available.'}');">
-				<input type="hidden" name="id_order" value="{$order->id}" />
+				<input type="hidden" name="id_order" value="{$order->id|intval}" />
 				<div style="display: none">
 					<input type="hidden" value="{$order->getWarehouseList()|implode}" id="warehouse_list" />
 				</div>
@@ -1010,12 +1005,12 @@
 										<tbody>
 											{foreach from=$discounts item=discount}
 											<tr>
-												<td>{$discount['name']}</td>
+												<td>{$discount['name']|escape:'htmlall'}</td>
 												<td>
-												{if $discount['value'] != 0.00}
+												{if $discount['value']|floatval != 0.00}
 													-
 												{/if}
-												{displayPrice price=$discount['value'] currency=$currency->id}
+												{displayPrice price=$discount['value'] currency=$currency->id|intval}
 												</td>
 												{if $can_edit}
 												<td>
@@ -1080,8 +1075,8 @@
 											<td class="partial_refund_fields current-edit" style="display:none;">
 												<div class="input-group">
 													<div class="input-group-addon">
-														{$currency->prefix}
-														{$currency->suffix}
+														{$currency->prefix|escape:'htmlall'}
+														{$currency->suffix|escape:'htmlall'}
 													</div>
 													<input type="text" name="partialRefundShippingCost" value="0" />
 												</div>
@@ -1217,13 +1212,13 @@
 							{foreach $order->getBrother() as $brother_order}
 							<tr>
 								<td>
-									<a href="{$current_index}&amp;vieworder&amp;id_order={$brother_order->id}&amp;token={$smarty.get.token|escape:'html':'UTF-8'}">#{$brother_order->id}</a>
+									<a href="{$current_index}&amp;vieworder&amp;id_order={$brother_order->id}&amp;token={$smarty.get.token|escape:'html':'UTF-8'}">#{$brother_order->id|intval}</a>
 								</td>
 								<td>
 									{$brother_order->getCurrentOrderState()->name[$current_id_lang]}
 								</td>
 								<td>
-									{displayPrice price=$brother_order->total_paid_tax_incl currency=$currency->id}
+									{displayPrice price=$brother_order->total_paid_tax_incl currency=$currency->id|intval}
 								</td>
 								<td>
 									<a href="{$current_index}&amp;vieworder&amp;id_order={$brother_order->id}&amp;token={$smarty.get.token|escape:'html':'UTF-8'}">
