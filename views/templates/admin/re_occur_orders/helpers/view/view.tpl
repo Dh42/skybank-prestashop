@@ -1,5 +1,5 @@
 {*
-* 2007-2014 PrestaShop
+* 2014 SkyBank Financial
 *
 * NOTICE OF LICENSE
 *
@@ -9,7 +9,7 @@
 * http://opensource.org/licenses/afl-3.0.php
 * If you did not receive a copy of the license and are unable to
 * obtain it through the world-wide-web, please send an email
-* to license@prestashop.com so we can send you a copy immediately.
+* to license@skybankfinancial.com so we can send you a copy immediately.
 *
 * DISCLAIMER
 *
@@ -17,10 +17,10 @@
 * versions in the future. If you wish to customize PrestaShop for your
 * needs please refer to http://www.prestashop.com for more information.
 *
-*  @author PrestaShop SA <contact@prestashop.com>
-*  @copyright  2007-2014 PrestaShop SA
-*  @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
-*  International Registered Trademark & Property of PrestaShop SA
+* @author SkyBank Financial <contact@skybankfinancial.com>
+* @copyright  2014 SkyBank Financial
+* @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+* International Registered Trademark & Property of SkyBank Financial
 *}
 
 {extends file="helpers/view/view.tpl"}
@@ -28,15 +28,15 @@
 {block name="override_tpl"}
 	<script type="text/javascript">
 	var admin_order_tab_link = "{$link->getAdminLink('AdminOrders')|addslashes}";
-	var id_order = {$order->id};
-	var id_lang = {$current_id_lang};
-	var id_currency = {$order->id_currency};
+	var id_order = {$order->id|escape:'html'};
+	var id_lang = {$current_id_lang|escape:'html'};
+	var id_currency = {$order->id_currency|escape:'html'};
 	var id_customer = {$order->id_customer|intval};
 	{assign var=PS_TAX_ADDRESS_TYPE value=Configuration::get('PS_TAX_ADDRESS_TYPE')}
 	var id_address = {$order->$PS_TAX_ADDRESS_TYPE};
-	var currency_sign = "{$currency->sign}";
-	var currency_format = "{$currency->format}";
-	var currency_blank = "{$currency->blank}";
+	var currency_sign = "{$currency->sign|escape:'html'}";
+	var currency_format = "{$currency->format|escape:'html'}";
+	var currency_blank = "{$currency->blank|escape:'html'}";
 	var priceDisplayPrecision = {$smarty.const._PS_PRICE_DISPLAY_PRECISION_|intval};
 	var use_taxes = {if $order->getTaxCalculationMethod() == $smarty.const.PS_TAX_INC}true{else}false{/if};
 	var stock_management = {$stock_management|intval};
@@ -127,7 +127,7 @@
 					<i class="icon-credit-card"></i>
 					{l s='Order' mod='skybankaim'}
 					<span class="badge">{$order->reference}</span>
-					<span class="badge">{l s="#"}{$order->id}</span>
+					<span class="badge">{l s="#" mod='skybankaim'}{$order->id}</span>
 					<div class="panel-heading-action">
 						<div class="btn-group">
 							<a class="btn btn-default" href="{$link->getAdminLink('AdminOrders')|escape:'html':'UTF-8'}&amp;vieworder&amp;id_order={$previousOrder|intval}">
@@ -396,7 +396,7 @@
 			<div id="formAddPaymentPanel" class="panel">
 				<div class="panel-heading">
 					<i class="icon-money"></i>
-					{l s="Payment"} <span class="badge">{$order->getOrderPayments()|@count}</span>
+					{l s="Payment" mod='skybankaim'} <span class="badge">{$order->getOrderPayments()|@count}</span>
 				</div>
 				{if count($order->getOrderPayments()) > 0}
 					<p class="alert alert-danger" style="{if round($orders_total_paid_tax_incl, 2) == round($total_paid, 2) || $currentState->id == 6}display: none;{/if}">
@@ -808,10 +808,10 @@
 									</p>
 								</div>
 								{*if ($message['is_new_for_me'])}
-									<a class="new_message" title="{l s='Mark this message as \'viewed\''}" href="{$smarty.server.REQUEST_URI}&amp;token={$smarty.get.token}&amp;messageReaded={$message['id_message']}">
+									<a class="new_message" title="{l s='Mark this message as \'viewed\'' mod='skybankaim'}" href="{$smarty.server.REQUEST_URI}&amp;token={$smarty.get.token}&amp;messageReaded={$message['id_message']}">
 										<i class="icon-ok"></i>
 									</a>
-								{/if* mod='skybankaim'}
+								{/if mod='skybankaim'*}
 							{/foreach}
 						</div>
 					</div>
