@@ -1,3 +1,9 @@
+{*
+* Copyright (C) SkyBank Financial - All Rights Reserved
+* Unauthorized redistribution of this file or any of the code here in is strickly prohibited
+* Proprietary and confidential
+* Written by SkyBank Financial 2014
+*}
 <?php
 include(dirname(__FILE__).'/../../config/config.inc.php');
 include(dirname(__FILE__).'/AutoShipOrders.php');
