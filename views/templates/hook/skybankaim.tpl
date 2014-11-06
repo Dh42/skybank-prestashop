@@ -23,7 +23,7 @@
 * International Registered Trademark & Property of SkyBank Financial
 *}
 
-<link rel="shortcut icon" type="image/x-icon" href="{$module_dir}img/secure.png" />
+<link rel="shortcut icon" type="image/x-icon" href="{$module_dir|escape:'html'}img/secure.png" />
 <p class="payment_module" >	
 {if $isFailed == 1}		
 	<p style="color: red;">			

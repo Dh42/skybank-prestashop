@@ -26,11 +26,11 @@
 <div id="orders">
     {capture name=path}
         <a href="{$link->getPageLink('my-account', true)|escape:'html'}">{l s='My account' mod='skybankaim' mod='skybankaim'}</a>
-        <span class="navigation-pipe">{$navigationPipe}</span>
+        <span class="navigation-pipe">{$navigationPipe|escape:'html'}</span>
         <a href="{$link->getModuleLink('skybankaim', 'orders')|escape:'html'}">{l s='Manage Autoship Orders' mod='skybankaim' mod='skybankaim'}</a>
                 {if isset($current_wishlist)}
-                <span class="navigation-pipe">{$navigationPipe}</span>
-                {$current_wishlist.name}
+                <span class="navigation-pipe">{$navigationPipe|escape:'html'}</span>
+                {$current_wishlist.name|escape:'html'}
                 {/if}
     {/capture}
 
@@ -55,17 +55,17 @@
                                 {foreach from=$orders item=order name=myLoop}
                                         <tr id="autoship_order_{$order.id_order}" class="{if $smarty.foreach.myLoop.first}first_item{elseif $smarty.foreach.myLoop.last}last_item{else}item{/if} {if $smarty.foreach.myLoop.index % 2}alternate_item{/if}">
                                                 <td class="history_link bold">
-                                                                {$order.order_name}
+                                                                {$order.order_name|escape:'html'}
                                                 </td>
                                                 <td class="history_date bold">
-								<select id="frequency_{$order.id_order}">
+								<select id="frequency_{$order.id_order|escape:'html'}">
                         {section name=days start=1 loop=61}
                                 <option value="{$smarty.section.days.index}" {if $smarty.section.days.index == $order.frequency}selected="selected" {/if}>{$smarty.section.days.index}</option>
                         {/section}
                 </select>
                                                                 &nbsp; days
                                                 </td>
-                                                <td class="history_price" data-value="{$order.total_paid}">
+                                                <td class="history_price" data-value="{$order.total_paid|escape:'html'}">
                                                         <span class="price">
                                                                 {displayPrice price=$order.total_paid currency=$order.id_currency no_utf8=false convert=false}
                                                         </span>
