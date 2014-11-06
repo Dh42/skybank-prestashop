@@ -1,0 +1,13 @@
+diff a/controllers/admin/AdminReOccurOrdersController.php b/controllers/admin/AdminReOccurOrdersController.php	(rejected hunks)
+@@ -625,9 +625,9 @@
+ 				{
+ 					$amount = 0;
+ 					$order_detail_list = array();
+-					foreach ($_POST['partialRefundProduct'] as $id_order_detail => $amount_detail)
++					foreach (Tools::getValue('partialRefundProduct') as $id_order_detail => $amount_detail)
+ 					{
+-						$order_detail_list[$id_order_detail]['quantity'] = (int)$_POST['partialRefundProductQuantity'][$id_order_detail];
++						$order_detail_list[$id_order_detail]['quantity'] = (int)Tools::getValue('partialRefundProductQuantity')[$id_order_detail];
+ 
+ 						if (empty($amount_detail))
+ 						{
