@@ -24,11 +24,11 @@
 * International Registered Trademark & Property of SkyBank Financial
 */
 
-include(dirname(__FILE__). '/../../config/config.inc.php');
-include(dirname(__FILE__). '/../../init.php');
+include(dirname(__FILE__) . '/../../config/config.inc.php');
+include(dirname(__FILE__) . '/../../init.php');
 
 /* will include backward file */
-include(dirname(__FILE__). '/skybankaim.php');
+include(dirname(__FILE__) . '/skybankaim.php');
 
 
 $skybankaim = new SkyBankAIM();
@@ -67,7 +67,7 @@ $params_f = array(
 	'UserName' => Configuration::get('SKYBANK_AIM_USERNAME'),
 	'Password' => Configuration::get('SKYBANK_AIM_PASSWORD'),
 );
-if (Tools::getValue('x_type')== 'check')
+if (Tools::getValue('x_type') == 'check')
 {
 	$error_no = 2;
 	$url = 'https://skybank.payment-gate.net/ws/transact.asmx/ProcessCheck';
@@ -87,7 +87,8 @@ if (Tools::getValue('x_type')== 'check')
 		'ExtData' => '',
 	);
 	$order_status = Configuration::get('SKYBANK_AIM_CHECK_OS');
-}else{
+}
+else{
 	
 	$error_no = 1;
 	$url = 'https://skybank.payment-gate.net/ws/transact.asmx/ProcessCreditCard';
@@ -100,7 +101,7 @@ if (Tools::getValue('x_type')== 'check')
 		'ExpDate' => Tools::safeOutput(Tools::getValue('x_exp_date_m').Tools::getValue('x_exp_date_y')),
 		'NameOnCard' => Tools::safeOutput(Tools::getValue('name')),
 		'Amount' => number_format((float)$cart->getOrderTotal(true, Cart::BOTH), 2, '.', ''),
-		'InvNum' => (int)Tools::getValue('x_invoice_num')+102,
+		'InvNum' => (int)Tools::getValue('x_invoice_num') + 102,
 		'PNRef' => $trx_type ? (int)Tools::getValue('x_invoice_num') : '',
 		'Street' => Tools::safeOutput($invoiceAddress->address1.' '.$invoiceAddress->address2),
 		'Zip' => Tools::safeOutput($invoiceAddress->postcode),
@@ -120,24 +121,23 @@ $payment_method = 'SkyBank APM';
 $re_occur = (bool)Configuration::get('SKYBANK_AIM_REOCC');
 
 
-switch ($response->Result) // Response code
+switch ($response->Result) 
 {
-	case 0: // Payment accepted
+	case 0: 
 		$transaction_id = $response->Message2->AuthCode;
 
-		// if($re_occur && Tools::safeOutput(Tools::getValue('x_autoShip')) > 0)
-		// {
+
 		if (Tools::getValue('x_type') != 'check')
 {
 		$customerkey = Customer::getSkyBankCustomerkey($customer->id);
-		if(!$customerkey)
+		if (!$customerkey)
 		{
 		$url = 'https://skybank.payment-gate.net/paygate/ws/recurring.asmx/ManageCustomer';
 		$state = new State($invoiceAddress->id_state);
 		$country = new Country($invoiceAddress->id_country);
-		$state_iso_code = ($country->iso_code == 'US') ? Tools::safeOutput($state->iso_code) : '' ;
-		if($country->iso_code == 'US') $country_iso_code = 'USA' ;
-		else if($country->iso_code == 'CA') $country_iso_code = 'CAN' ;
+		$state_iso_code = ($country->iso_code == 'US') ? Tools::safeOutput($state->iso_code) : '';
+		if ($country->iso_code == 'US') $country_iso_code = 'USA';
+		else if ($country->iso_code == 'CA') $country_iso_code = 'CAN';
 		else $country_iso_code = '';
 		$extras = array(
 			'TransType' => 'ADD',
@@ -169,11 +169,10 @@ switch ($response->Result) // Response code
 		$response = $skybankaim->getResponse($url, $params);
 		$customerkey = $response->CustomerKey;
 		Db::getInstance()->insert('skybankaim_customer', array(
-                        'id_customer' => (int)$customer->id,
-                        'customerkey' => (int)$customerkey,
-       			 ));
-		}
-		// } 
+			'id_customer' => (int)$customer->id,
+			'customerkey' => (int)$customerkey,
+			));
+		} 
 
 
 
@@ -195,13 +194,13 @@ switch ($response->Result) // Response code
 		$response = $skybankaim->getResponse($url, $params);
 		if(!empty($response->CcInfoKey))
 		Db::getInstance()->insert('skybankaim_card', array(
-                    'id_customer' => (int)$customer->id,
-                    'card_number' => (string)Tools::substr(Tools::safeOutput(Tools::getValue('x_card_num')), -4),
-                    'card_brand' => Tools::safeOutput(Tools::getValue('x_cardType')),
-                    'card_expiration' => Tools::safeOutput(Tools::getValue('x_exp_date_m').'/'.Tools::getValue('x_exp_date_y')),
-                    'card_holder' => Tools::safeOutput(Tools::getValue('name')),
-                    'ccinfokey' => $response->CcInfoKey
-           		 ));
+			'id_customer' => (int)$customer->id,
+			'card_number' => (string)Tools::substr(Tools::safeOutput(Tools::getValue('x_card_num')), -4),
+			'card_brand' => Tools::safeOutput(Tools::getValue('x_cardType')),
+			'card_expiration' => Tools::safeOutput(Tools::getValue('x_exp_date_m').'/'.Tools::getValue('x_exp_date_y')),
+			'card_holder' => Tools::safeOutput(Tools::getValue('name')),
+			'ccinfokey' => $response->CcInfoKey
+			));
 
 		$skybankaim->setTransactionDetail(array(
 			$transaction_id,
@@ -210,8 +209,7 @@ switch ($response->Result) // Response code
 			Tools::safeOutput(Tools::getValue('name')))
 		);
 }
-		// if check, only set to sale
-		if(Tools::getValue('x_type') == 'check')
+		if (Tools::getValue('x_type') == 'check')
 			$trx_type = 1;
 
 		$extra_vars = array();
@@ -222,12 +220,12 @@ switch ($response->Result) // Response code
 		if($re_occur && Tools::safeOutput(Tools::getValue('x_autoShip')) > 0)
 		{
 			Db::getInstance()->insert('skybankaim_autoship_order', array(
-                                'id_order'   => (int)$skybankaim->currentOrder,
-                                'order_name' => Tools::safeOutput(Tools::getValue('x_order_name')),
-                                'frequency'  => Tools::safeOutput(Tools::getValue('x_autoShip')),
+				'id_order'   => (int)$skybankaim->currentOrder,
+				'order_name' => Tools::safeOutput(Tools::getValue('x_order_name')),
+				'frequency'  => Tools::safeOutput(Tools::getValue('x_autoShip')),
 				'last_run_date'     =>  date('Y-m-d'),
 				'active'     => 1
-                        ));
+				));
 		}
 		break;
 	default:
