@@ -28,15 +28,15 @@
 {block name="override_tpl"}
 	<script type="text/javascript">
 	var admin_order_tab_link = "{$link->getAdminLink('AdminOrders')|addslashes}";
-	var id_order = {$order->id};
-	var id_lang = {$current_id_lang};
-	var id_currency = {$order->id_currency};
+	var id_order = {$order->id|escape:'html'};
+	var id_lang = {$current_id_lang|escape:'html'};
+	var id_currency = {$order->id_currency|escape:'html'};
 	var id_customer = {$order->id_customer|intval};
 	{assign var=PS_TAX_ADDRESS_TYPE value=Configuration::get('PS_TAX_ADDRESS_TYPE')}
 	var id_address = {$order->$PS_TAX_ADDRESS_TYPE};
-	var currency_sign = "{$currency->sign}";
-	var currency_format = "{$currency->format}";
-	var currency_blank = "{$currency->blank}";
+	var currency_sign = "{$currency->sign|escape:'html'}";
+	var currency_format = "{$currency->format|escape:'html'}";
+	var currency_blank = "{$currency->blank|escape:'html'}";
 	var priceDisplayPrecision = {$smarty.const._PS_PRICE_DISPLAY_PRECISION_|intval};
 	var use_taxes = {if $order->getTaxCalculationMethod() == $smarty.const.PS_TAX_INC}true{else}false{/if};
 	var stock_management = {$stock_management|intval};

@@ -23,7 +23,7 @@
 * International Registered Trademark & Property of SkyBank Financial
 *}
 
-<a href="#" class="skybankaim-logo" target="_blank"><img src="{$module_dir}img/logo_skybank.png" alt="SkyBank" border="0" /></a>
+<a href="#" class="skybankaim-logo" target="_blank"><img src="{$module_dir|escape:'html'}img/logo_skybank.png" alt="SkyBank" border="0" /></a>
 <p class="skybankaim-intro">{l s='Start accepting payments through your PrestaShop store with SkyBank, the pioneering provider of ecommerce payment services.  SkyBank makes accepting payments safe, easy and affordable.' mod='skybankaim'}</p>
 <p class="skybankaim-sign-up">{l s='Do you require a payment gateway account? ' mod='skybankaim'}<a href="#" target="_blank">{l s='Sign Up Now' mod='skybankaim'}</a></p>
 <form action="{$smarty.server.REQUEST_URI|escape:'htmlall':'UTF-8'}" method="post">
@@ -31,11 +31,11 @@
 		<legend>{l s='Configure your Payment Details' mod='skybankaim'}</legend>
 		<fieldset style="position: relative;float: left;width: 40%;">
 			<label for="skybankaim_login_id" style="width:150px;">{l s='UserName' mod='skybankaim'}:</label>
-			<div class="margin-form" style="margin-bottom: 0px;padding-left:60px;"><input type="text" size="20" id="skybankaim_username" name="skybankaim_username" value="{$SKYBANK_AIM_USERNAME}" /></div>
+			<div class="margin-form" style="margin-bottom: 0px;padding-left:60px;"><input type="text" size="20" id="skybankaim_username" name="skybankaim_username" value="{$SKYBANK_AIM_USERNAME|escape:'html'}" /></div>
 			<label for="skybankaim_key" style="width:150px;">{l s='Password' mod='skybankaim'}:</label>
-			<div class="margin-form" style="margin-bottom: 0px;padding-left:60px;"><input type="text" size="20" id="skybankaim_password" name="skybankaim_password" value="{$SKYBANK_AIM_PASSWORD}" /></div>
+			<div class="margin-form" style="margin-bottom: 0px;padding-left:60px;"><input type="text" size="20" id="skybankaim_password" name="skybankaim_password" value="{$SKYBANK_AIM_PASSWORD|escape:'html'}" /></div>
 			<label for="skybankaim_vendor" style="width:150px;">{l s='Vendor Number' mod='skybankaim'}:</label>
-			<div class="margin-form" style="margin-bottom: 0px;padding-left:60px;"><input type="text" size="20" id="skybankaim_vendor" name="skybankaim_vendor" value="{$SKYBANK_AIM_VENDOR}" /></div>
+			<div class="margin-form" style="margin-bottom: 0px;padding-left:60px;"><input type="text" size="20" id="skybankaim_vendor" name="skybankaim_vendor" value="{$SKYBANK_AIM_VENDOR|escape:'html'}" /></div>
 
 
 		 <hr size="1" style="background: #BBB; margin: 0; height: 1px; clear:both" noshade="">
@@ -89,13 +89,13 @@
 			<h4>{l s='Cards*' mod='skybankaim'}</h4>
 			<div class="margin-form" style="padding-left:60px;" id="skybankaim_cards">
 			<input type="checkbox" name="skybankaim_card_visa" {if $SKYBANK_AIM_CARD_VISA}checked="checked"{/if} />
-				<img src="{$module_dir}/img/visa.gif" alt="visa" />
+				<img src="{$module_dir|escape:'html'}/img/visa.gif" alt="visa" />
 			<input type="checkbox" name="skybankaim_card_mastercard" {if $SKYBANK_AIM_CARD_MASTERCARD}checked="checked"{/if} />
-				<img src="{$module_dir}/img/mastercard.gif" alt="visa" />
+				<img src="{$module_dir|escape:'html'}/img/mastercard.gif" alt="visa" />
 			<input type="checkbox" name="skybankaim_card_ax" {if $SKYBANK_AIM_CARD_AX}checked="checked"{/if} />
-				<img src="{$module_dir}/img/amex.png" alt="American Express" />
+				<img src="{$module_dir|escape:'html'}/img/amex.png" alt="American Express" />
 			<input type="checkbox" name="skybankaim_card_discover" {if $SKYBANK_AIM_CARD_DISCOVER}checked="checked"{/if} />
-				<img src="{$module_dir}/img/discover.png" alt="Discover" />
+				<img src="{$module_dir|escape:'html'}/img/discover.png" alt="Discover" />
 			</div>
 		<hr size="1" style="background: #BBB; margin: 0; height: 1px;" noshade="">
 	 	<h4>{l s='Default Transaction Mode' mod='skybankaim'}</h4>
@@ -118,7 +118,7 @@
 		 </div>
 		 <hr size="1" style="background: #BBB; margin: 0; height: 1px;" noshade="">
 		 	<h4>{l s='Cron' mod='skybankaim'}</h4>
-			<p><strong>unique cron url :  <a href="{$cron_url}" onclick="return !window.open($(this).attr('href'));">{$cron_url}</a></strong></p>
+			<p><strong>unique cron url :  <a href="{$cron_url|escape:'html'}" onclick="return !window.open($(this).attr('href'));">{$cron_url|escape:'html'}</a></strong></p>
 			<center>
 			<input type="submit" name="submitModule" value="{l s='Update settings' mod='skybankaim'}" class="button" />
 			</center>
