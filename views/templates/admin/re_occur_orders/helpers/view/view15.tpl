@@ -1,5 +1,5 @@
 {*
-* 2007-2013 PrestaShop
+* 2014 SkyBank Financial
 *
 * NOTICE OF LICENSE
 *
@@ -9,7 +9,7 @@
 * http://opensource.org/licenses/afl-3.0.php
 * If you did not receive a copy of the license and are unable to
 * obtain it through the world-wide-web, please send an email
-* to license@prestashop.com so we can send you a copy immediately.
+* to license@skybankfinancial.com so we can send you a copy immediately.
 *
 * DISCLAIMER
 *
@@ -17,10 +17,10 @@
 * versions in the future. If you wish to customize PrestaShop for your
 * needs please refer to http://www.prestashop.com for more information.
 *
-*  @author PrestaShop SA <contact@prestashop.com>
-*  @copyright  2007-2013 PrestaShop SA
-*  @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
-*  International Registered Trademark & Property of PrestaShop SA
+* @author SkyBank Financial <contact@skybankfinancial.com>
+* @copyright  2014 SkyBank Financial
+* @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+* International Registered Trademark & Property of SkyBank Financial
 *}
 
 {extends file="helpers/view/view.tpl"}
@@ -66,21 +66,21 @@
 	<div class="button-command">
 			{if (count($invoices_collection))}
 				<a class="button" href="{$link->getAdminLink('AdminPdf')|escape:'htmlall':'UTF-8'}&submitAction=generateInvoicePDF&id_order={$order->id}">
-					<img src="../img/admin/charged_ok.gif" alt="{l s='View invoice'}" /> {l s='View invoice'}
+					<img src="../img/admin/charged_ok.gif" alt="{l s='View invoice' mod='skybankaim'}" /> {l s='View invoice' mod='skybankaim'}
 				</a>
 			{else}
-				<img src="../img/admin/charged_ko.gif" alt="{l s='No invoice'}" /> {l s='No invoice'}
+				<img src="../img/admin/charged_ko.gif" alt="{l s='No invoice' mod='skybankaim'}" /> {l s='No invoice' mod='skybankaim'}
 			{/if}
 			 |
 			{if (($currentState && $currentState->delivery) || $order->delivery_number)}
 				<a class="button"  href="{$link->getAdminLink('AdminPdf')|escape:'htmlall':'UTF-8'}&submitAction=generateDeliverySlipPDF&id_order={$order->id}">
-					<img src="../img/admin/delivery.gif" alt="{l s='View delivery slip'}" /> {l s='View delivery slip'}
+					<img src="../img/admin/delivery.gif" alt="{l s='View delivery slip' mod='skybankaim'}" /> {l s='View delivery slip' mod='skybankaim'}
 				</a>
 			{else}
-				<img src="../img/admin/delivery_ko.gif" alt="{l s='No delivery slip'}" /> {l s='No delivery slip'}
+				<img src="../img/admin/delivery_ko.gif" alt="{l s='No delivery slip' mod='skybankaim'}" /> {l s='No delivery slip' mod='skybankaim'}
 			{/if}
 			 |
-			<a class="button" href="javascript:window.print()"><img src="../img/admin/printer.gif" alt="{l s='Print order'}" title="{l s='Print order'}" /> {l s='Print order'}</a>
+			<a class="button" href="javascript:window.print()"><img src="../img/admin/printer.gif" alt="{l s='Print order' mod='skybankaim'}" title="{l s='Print order' mod='skybankaim'}" /> {l s='Print order' mod='skybankaim'}</a>
 		</div>
 		<div class="metadata-command">
 			<dl>
@@ -800,11 +800,11 @@
 		{foreach from=$messages item=message}
 			<div style="overflow:auto; width:400px;" {if $message['is_new_for_me']}class="new_message"{/if}>
 			{if ($message['is_new_for_me'])}
-				<a class="new_message" title="{l s='Mark this message as \'viewed\''}" href="{$smarty.server.REQUEST_URI}&token={$smarty.get.token}&messageReaded={$message['id_message']}"><img src="../img/admin/enabled.gif" alt="" /></a>
+				<a class="new_message" title="{l s='Mark this message as \'viewed\'' mod='skybankaim'}" href="{$smarty.server.REQUEST_URI}&token={$smarty.get.token}&messageReaded={$message['id_message']}"><img src="../img/admin/enabled.gif" alt="" /></a>
 			{/if}
-			{l s='At'} <i>{dateFormat date=$message['date_add']}
-			</i> {l s='from'} <b>{if ($message['elastname']|escape:'htmlall':'UTF-8')}{$message['efirstname']|escape:'htmlall':'UTF-8'} {$message['elastname']|escape:'htmlall':'UTF-8'}{else}{$message['cfirstname']|escape:'htmlall':'UTF-8'} {$message['clastname']|escape:'htmlall':'UTF-8'}{/if}</b>
-			{if ($message['private'] == 1)}<span style="color:red; font-weight:bold;">{l s='Private'}</span>{/if}
+			{l s='At' mod='skybankaim'} <i>{dateFormat date=$message['date_add']}
+			</i> {l s='from' mod='skybankaim'} <b>{if ($message['elastname']|escape:'htmlall':'UTF-8')}{$message['efirstname']|escape:'htmlall':'UTF-8'} {$message['elastname']|escape:'htmlall':'UTF-8'}{else}{$message['cfirstname']|escape:'htmlall':'UTF-8'} {$message['clastname']|escape:'htmlall':'UTF-8'}{/if}</b>
+			{if ($message['private'] == 1)}<span style="color:red; font-weight:bold;">{l s='Private' mod='skybankaim'}</span>{/if}
 			<p>{$message['message']|escape:'htmlall':'UTF-8'|nl2br}</p>
 			</div>
 			<br />
@@ -813,5 +813,5 @@
 	{/if}
 	</div>
 	<div class="clear">&nbsp;</div>
-	<br /><br /><a href="{$current_index}&token={$smarty.get.token}"><img src="../img/admin/arrow2.gif" /> {l s='Back to list'}</a><br />
+	<br /><br /><a href="{$current_index}&token={$smarty.get.token}"><img src="../img/admin/arrow2.gif" /> {l s='Back to list' mod='skybankaim'}</a><br />
 {/block}

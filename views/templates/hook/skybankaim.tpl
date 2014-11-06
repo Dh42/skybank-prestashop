@@ -1,5 +1,5 @@
 {*
-* 2007-2013 PrestaShop
+* 2014 SkyBank Financial
 *
 * NOTICE OF LICENSE
 *
@@ -9,7 +9,7 @@
 * http://opensource.org/licenses/afl-3.0.php
 * If you did not receive a copy of the license and are unable to
 * obtain it through the world-wide-web, please send an email
-* to license@prestashop.com so we can send you a copy immediately.
+* to license@skybankfinancial.com so we can send you a copy immediately.
 *
 * DISCLAIMER
 *
@@ -17,13 +17,13 @@
 * versions in the future. If you wish to customize PrestaShop for your
 * needs please refer to http://www.prestashop.com for more information.
 *
-*  @author PrestaShop SA <contact@prestashop.com>
-*  @copyright  2007-2013 PrestaShop SA
-*  @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
-*  International Registered Trademark & Property of PrestaShop SA
+* @author SkyBank Financial <contact@skybankfinancial.com>
+* @copyright  2014 SkyBank Financial
+* @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+* International Registered Trademark & Property of SkyBank Financial
 *}
 
-<link rel="shortcut icon" type="image/x-icon" href="{$module_dir}img/secure.png" />
+<link rel="shortcut icon" type="image/x-icon" href="{$module_dir|escape:'html'}img/secure.png" />
 <p class="payment_module" >	
 {if $isFailed == 1}		
 	<p style="color: red;">			
@@ -35,7 +35,7 @@
 	{/if}
 	</p>
 {/if}
-<form name="skybankaim_form" id="skybankaim_form" action="{$module_dir}validation.php" method="post">
+<form name="skybankaim_form" id="skybankaim_form" action="{$module_dir|escape:'html'}validation.php" method="post">
  <span style="border: 1px solid #595A5E;display: block;padding: 0.6em;text-decoration: none;margin-left: 0.7em;">
   <a id="click_skybankaim" href="#" title="{l s='Pay by Credit/Debit Card' mod='skybankaim'}" style="display: block;text-decoration: none; font-weight: bold;">
   {if $cards.visa == 1}<img src="{$module_dir}img/visa.png" alt="{l s='Visa Logo' mod='skybankaim'}" style="vertical-align: middle;" />{/if}
@@ -51,14 +51,14 @@
   {/if}				
 	 <br /><br />				
 	 <div style="width: 136px; height: 350px; padding-top:40px; padding-right: 20px; border-right: 1px solid #DDD;">
-	  <img width="130" src="{$module_dir}img/logo_skybank.png" alt="secure payment" />
+	  <img width="130" src="{$module_dir|escape:'html'}img/logo_skybank.png" alt="secure payment" />
 	 </div>				
 	 <div style="width: 556px; height: 350px; padding-top:40px; padding-right: 20px;">
 	 <input type="hidden" name="x_type" value="card"/>				
 	 <input type="hidden" name="x_invoice_num" value="{$x_invoice_num|escape:'htmlall':'UTF-8'}" />
 	 <input type="hidden" name="x_currency_code" value="{$currency->iso_code|escape:'htmlall':'UTF-8'}" />
 	 <label style="margin-top: 4px; margin-left: 35px;display: block;width: 90px;float: left;">{l s='Full name' mod='skybankaim'}</label> 
-	 <input type="text" name="name" id="skybank_fullname" size="30" maxlength="255" style="width:190px;"/><img src="{$module_dir}img/secure.png" alt="" style="margin-left: 5px;" /><br /><br />
+	 <input type="text" name="name" id="skybank_fullname" size="30" maxlength="255" style="width:190px;"/><img src="{$module_dir|escape:'html'}img/secure.png" alt="" style="margin-left: 5px;" /><br /><br />
 	 <label style="margin-top: 4px; margin-left: 35px; display: block;width: 90px;float: left;">{l s='Card Type' mod='skybankaim'}</label>
 	 <select id="skybank_cardType" name="x_cardType" style="width:185px;">					
 	  {if $cards.ax == 1}<option value="AmEx">American Express</option>{/if}
@@ -68,27 +68,27 @@
       {if $cards.discover == 1}<option value="DinersClub">DinersClub</option>{/if}
       {if $cards.discover == 1}<option value="JCB">JCB</option>{/if}
       </select>				
-         <img src="{$module_dir}img/secure.png" alt="" style="margin-left: 5px;" /><br /><br />
+         <img src="{$module_dir|escape:'html'}img/secure.png" alt="" style="margin-left: 5px;" /><br /><br />
          <label style="margin-top: 4px; margin-left: 35px; display: block; width: 90px; float: left;">{l s='Card Number' mod='skybankaim'}</label> 
-         <input type="text" name="x_card_num" id="skybank_cardnum" size="30" maxlength="16" autocomplete="Off" value="" style="width:190px;"style="width:190px;" /><img src="{$module_dir}img/secure.png" alt="" style="margin-left: 5px;" /><br /><br />
+         <input type="text" name="x_card_num" id="skybank_cardnum" size="30" maxlength="16" autocomplete="Off" value="" style="width:190px;"style="width:190px;" /><img src="{$module_dir|escape:'html'}img/secure.png" alt="" style="margin-left: 5px;" /><br /><br />
          <label style="margin-top: 4px; margin-left: 35px; display: block; width: 90px; float: left;">{l s='EXP Date' mod='skybankaim'}</label>	
          <select id="skybank_x_exp_date_m" name="x_exp_date_m" style="width:80px;">
 	  {section name=date_m start=01 loop=13}					
-	  	<option value="{$smarty.section.date_m.index}">{$smarty.section.date_m.index}</option>
+	  	<option value="{$smarty.section.date_m.index|escape:'html'}">{$smarty.section.date_m.index|escape:'html'}</option>
 	  {/section}				
          </select>/
          <select name="x_exp_date_y" style="width:100px;">
 	  {section name=date_y start=14 loop=26}
-	  	<option value="{$smarty.section.date_y.index}">20{$smarty.section.date_y.index}</option>
+	  	<option value="{$smarty.section.date_y.index|escape:'html'}">20{$smarty.section.date_y.index|escape:'html'}</option>
 	  {/section}				
          </select>				
-         <img src="{$module_dir}img/secure.png" alt="" style="margin-left: 5px;" /><br /><br />				
+         <img src="{$module_dir|escape:'html'}img/secure.png" alt="" style="margin-left: 5px;" /><br /><br />				
          <label style="margin-top: 4px; margin-left: 35px; display: block; width: 90px; float: left;">{l s='CVV' mod='skybankaim'}</label> 
          <input type="text" name="x_card_code" id="skybank_x_card_code" size="4" maxlength="4" style="width:190px;"/>
-         <img src="{$module_dir}img/secure.png" alt="" style="margin-left: 5px;"/>
+         <img src="{$module_dir|escape:'html'}img/secure.png" alt="" style="margin-left: 5px;"/>
          <span style="position:relative">
-			<img src="{$module_dir}img/help.png" id="cvv_help" title="{l s='the 3 last digits on the back of your credit card' mod='skybankaim'}" alt="" />
-	        <img style="display:none; position:absolute;left: 20px; top: -100px" src="{$module_dir}img/cvv2.png" id="cvv_help_img" title="{l s='the 3 last digits on the back of your credit card' mod='skybankaim'}" alt="" />
+			<img src="{$module_dir|escape:'html'}img/help.png" id="cvv_help" title="{l s='the 3 last digits on the back of your credit card' mod='skybankaim'}" alt="" />
+	        <img style="display:none; position:absolute;left: 20px; top: -100px" src="{$module_dir|escape:'html'}img/cvv2.png" id="cvv_help_img" title="{l s='the 3 last digits on the back of your credit card' mod='skybankaim'}" alt="" />
          </span>
          
 		<br><br>
@@ -143,9 +143,9 @@
 	{/if}
 	</p>
 	{/if}
-	<form name="skybankcheck_form" id="skybankcheck_form" action="{$module_dir}validation.php" method="post">
+	<form name="skybankcheck_form" id="skybankcheck_form" action="{$module_dir|escape:'html'}validation.php" method="post">
 	 <span style="border: 1px solid #595A5E;display: block;padding: 0.6em;text-decoration: none;margin-left: 0.7em;">
-	 <a id="click_skybank_echeck" href="#" title="{l s='Pay by Check' mod='skybankaim'}" style="display: block;text-decoration: none; font-weight: bold;"><img src="{$module_dir}img/echeck.jpg" alt="{l s='Echeck Logo' mod='skybankaim'}" style="vertical-align: middle;" />
+	 <a id="click_skybank_echeck" href="#" title="{l s='Pay by Check' mod='skybankaim'}" style="display: block;text-decoration: none; font-weight: bold;"><img src="{$module_dir|escape:'html'}img/echeck.jpg" alt="{l s='Echeck Logo' mod='skybankaim'}" style="vertical-align: middle;" />
           &nbsp;&nbsp;{l s='Pay by Electronic Check' mod='skybankaim'}			
          </a>
   {if $isFailed == 0 || $isFailed == 1}						
@@ -155,23 +155,23 @@
   {/if}				
 	  <br /><br />				
 	 <div style="width: 136px; height: 350px; padding-top:40px; padding-right: 20px; border-right: 1px solid #DDD;">
-	  <img width="130" src="{$module_dir}img/logo_skybank.png" alt="secure payment" />
+	  <img width="130" src="{$module_dir|escape:'html'}img/logo_skybank.png" alt="secure payment" />
 	 </div>				
 	 <div style="width: 556px; height: 350px; padding-top:40px; padding-right: 20px;">
 	  <input type="hidden" name="x_type" value="check"/>				
 	  <input type="hidden" name="x_invoice_num" value="{$x_invoice_num|escape:'htmlall':'UTF-8'}" />
 	  <input type="hidden" name="x_currency_code" value="{$currency->iso_code|escape:'htmlall':'UTF-8'}" />
 	  <label style="margin-top: 4px; margin-left: 35px;display: block;width: 140px;float: left;">{l s='Name on Account' mod='skybankaim'}</label> 
-	  <input type="text" name="nameoncheck" id="skybank_nameoncheck" size="30" maxlength="25S" /><img src="{$module_dir}img/secure.png" alt="" style="margin-left: 5px;" /><br /><br />
+	  <input type="text" name="nameoncheck" id="skybank_nameoncheck" size="30" maxlength="25S" /><img src="{$module_dir|escape:'html'}img/secure.png" alt="" style="margin-left: 5px;" /><br /><br />
 	  <label style="margin-top: 4px; margin-left: 35px; display: block; width: 140px; float: left;">{l s='Check Number' mod='skybankaim'}</label> 
-	  <input type="text" name="x_check_no" id="skybank_x_check_no" size="30" maxlength="4" /><img src="{$module_dir}img/secure.png" alt="" style="margin-left: 5px;" /><br /><br />
+	  <input type="text" name="x_check_no" id="skybank_x_check_no" size="30" maxlength="4" /><img src="{$module_dir|escape:'html'}img/secure.png" alt="" style="margin-left: 5px;" /><br /><br />
 	  <label style="margin-top: 4px;margin-left: 35px; display: block; width: 140px; float: left;">{l s='Routing Number' mod='skybankaim'}</label> 
-	  <input type="text" name="x_transit_no" id="skybank_x_transit_no" size="30" maxlength="14" /><img src="{$module_dir}img/secure.png" alt="" style="margin-left: 5px;" /><br /><br />
+	  <input type="text" name="x_transit_no" id="skybank_x_transit_no" size="30" maxlength="14" /><img src="{$module_dir|escape:'html'}img/secure.png" alt="" style="margin-left: 5px;" /><br /><br />
 	  <label style="margin-top: 4px; margin-left: 35px; display: block; width:140px; float: left;">{l s='Account Number' mod='skybankaim'}</label> 
-	  <input type="text" name="x_account_no" id="skybank_x_account_no" size="30" maxlength="14" /><img src="{$module_dir}img/secure.png" alt="" style="margin-left: 5px;" /><br /><br />
+	  <input type="text" name="x_account_no" id="skybank_x_account_no" size="30" maxlength="14" /><img src="{$module_dir|escape:'html'}img/secure.png" alt="" style="margin-left: 5px;" /><br /><br />
 {if $drvlno == 1}		
 	  <label style="margin-top: 4px; margin-left: 35px; display: block; width:140px; float: left;">{l s='Drivers License Number' mod='skybankaim'}</label> 
-	  <input type="text" name="x_drvlno" id="skybank_x_drvlno" size="30" maxlength="14" /><img src="{$module_dir}img/secure.png" alt="" style="margin-left: 5px;" /><br /><br />
+	  <input type="text" name="x_drvlno" id="skybank_x_drvlno" size="30" maxlength="14" /><img src="{$module_dir|escape:'html'}img/secure.png" alt="" style="margin-left: 5px;" /><br /><br />
 {/if}				
 
           <input type="button" id="checksubmit" value="{l s='Process Payment' mod='skybankaim'}" style="margin-left: 124px; padding-left: 25px; padding-right: 25px;" class="button" />
