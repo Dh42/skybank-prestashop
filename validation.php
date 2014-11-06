@@ -24,11 +24,11 @@
 * International Registered Trademark & Property of SkyBank Financial
 */
 
-include(dirname(__FILE__) . '/../../config/config.inc.php');
-include(dirname(__FILE__) . '/../../init.php');
+include(dirname(__FILE__).'/../../config/config.inc.php');
+include(dirname(__FILE__).'/../../init.php');
 
 /* will include backward file */
-include(dirname(__FILE__) . '/skybankaim.php');
+include(dirname(__FILE__).'/skybankaim.php');
 
 
 $skybankaim = new SkyBankAIM();

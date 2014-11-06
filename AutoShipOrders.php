@@ -45,7 +45,7 @@ class AutoShipOrders extends ObjectModel
                 WHERE so.`active` = 1 AND
 		DATE_ADD(last_run_date,INTERVAL frequency DAY) <= CURRENT_DATE 
                 ORDER BY o.`date_add` DESC');
-		return $res;		
+		return $res;
 	}
 	public static function getOrders($id_customer, Context $context = null)
         {
@@ -74,9 +74,7 @@ class AutoShipOrders extends ObjectModel
 
                         if ($res2)
                                 $res[$key] = array_merge($res[$key], $res2[0]);
-
                 }
                 return $res;
         }
-     
 }

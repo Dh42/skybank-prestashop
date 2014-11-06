@@ -26,21 +26,18 @@
 
 include(dirname(__FILE__).'/../../config/config.inc.php');
 include(dirname(__FILE__).'/AutoShipOrders.php');
-include(dirname(__FILE__). '/skybankaim.php');
+include(dirname(__FILE__).'/skybankaim.php');
 
 $skybankaim = new SkyBankAIM();
-	// $_GET['token'] = '74b0283c782f6e4416df4755fc233447';
 if (Tools::getValue('token'))
 {
-
-
-        $secureKey = md5(_COOKIE_KEY_.Configuration::get('PS_SHOP_NAME'));
-        if (!empty($secureKey) AND $secureKey == $_GET['token']){
+	$secureKey = md5(_COOKIE_KEY_.Configuration::get('PS_SHOP_NAME'));
+	if (!empty($secureKey) && $secureKey == $_GET['token'])
+	{
 		$orders = AutoShipOrders::getAllOrders();
-
 		$orderStatus = Configuration::get('SKYBANK_AIM_CARD_OS');
 		foreach($orders as $order){
-echo 'Autoship Order #'.$order['id_order'].'<br>' ;
+echo 'Autoship Order #'.$order['id_order'].'<br>';
 			$oldCart = new Cart(Order::getCartIdStatic((int)$order['id_order'], (int)$order['id_customer']));
 			$duplication = $oldCart->duplicate();
 			$cart = $duplication['cart'];
@@ -73,7 +70,8 @@ echo 'Autoship Order #'.$order['id_order'].'<br>' ;
                                 	$cart->getOrderTotal(true, Cart::BOTH), $skybankaim->displayName, $skybankaim->l('AutoShipOrder :').' '.
                                 	$order['order_name'], $extra_vars, null, false, $cart->secure_key
                         	);
-            if ($skybankaim->currentOrder){
+            if ($skybankaim->currentOrder)
+            {
 				Db::getInstance()->insert('skybankaim_re_order', array('id_order'   => (int)$skybankaim->currentOrder)); 	
 	 			Db::getInstance()->update('skybankaim_autoship_order', array('last_run_date' => date('Y-m-d')), 'id_order = '.(int)$order['id_order']);	
 			}
