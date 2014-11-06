@@ -18,15 +18,12 @@
 * versions in the future. If you wish to customize PrestaShop for your
 * needs please refer to http://www.prestashop.com for more information.
 *
-* @author SkyBank Financial <contact@skybankfinancial.com>
-* @copyright  2014 SkyBank Financial
-* @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+* @author    SkyBank Financial <contact@skybankfinancial.com>
+* @copyright 2014 SkyBank Financial
+* @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 * International Registered Trademark & Property of SkyBank Financial
 */
 
-/**
- * @since 1.5.0
- */
 class SkyBankAimOrdersModuleFrontController extends ModuleFrontController
 {
 	public $ssl = true;
