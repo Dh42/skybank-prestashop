@@ -621,13 +621,13 @@ class AdminReOccurOrdersController extends ModuleAdminController
 		{
 			if ($this->tabAccess['edit'] == '1')
 			{
-				if (is_array($_POST['partialRefundProduct']))
+				if (is_array(Tools::getValue('partialRefundProduct')))
 				{
 					$amount = 0;
 					$order_detail_list = array();
-					foreach ($_POST['partialRefundProduct'] as $id_order_detail => $amount_detail)
+					foreach (Tools::getValue('partialRefundProduct') as $id_order_detail => $amount_detail)
 					{
-						$order_detail_list[$id_order_detail]['quantity'] = (int)$_POST['partialRefundProductQuantity'][$id_order_detail];
+						$order_detail_list[$id_order_detail]['quantity'] = (int)Tools::getValue('partialRefundProductQuantity')[$id_order_detail];
 
 						if (empty($amount_detail))
 						{
@@ -1925,9 +1925,9 @@ class AdminReOccurOrdersController extends ModuleAdminController
 				'error' => Tools::displayError('You cannot add products to delivered orders. ')
 			)));
 
-		$product_informations = $_POST['add_product'];
-		if (isset($_POST['add_invoice']))
-			$invoice_informations = $_POST['add_invoice'];
+		$product_informations = Tools::getValue('add_product');
+		if (Tools::getValue('add_invoice'))
+			$invoice_informations = Tools::getValue('add_invoice');
 		else
 			$invoice_informations = array();
 		$product = new Product($product_informations['product_id'], false, $order->id_lang);
