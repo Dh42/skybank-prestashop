@@ -1,5 +1,5 @@
 <?php
-/*
+/**
 * Copyright (C) SkyBank Financial - All Rights Reserved
 * Unauthorized redistribution of this file or any of the code here in is strickly prohibited
 * Proprietary and confidential
