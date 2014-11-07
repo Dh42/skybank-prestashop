@@ -181,9 +181,9 @@ Configuration::updateValue('SKYBANK_AIM_CHECK_OS', _PS_OS_ERROR_);
 				) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;');
 		}
 	public function hookCustomerAccount($params)
-		{
+	{
 		return $this->display(__FILE__, 'views/templates/hook/my-account.tpl');
-		}
+	}
 	public function hookOrderConfirmation($params)
 	{
 		if ($params['objOrder']->module != $this->name)
@@ -400,7 +400,6 @@ Configuration::updateValue('SKYBANK_AIM_CHECK_OS', _PS_OS_ERROR_);
 
 	private function totalRefund($id_order)
 	{
-
 		$order = new Order((int)$id_order);
 		if (!Validate::isLoadedObject($order))
 			return false;
@@ -435,7 +434,6 @@ Configuration::updateValue('SKYBANK_AIM_CHECK_OS', _PS_OS_ERROR_);
 			'Amount' => $order->total_paid_real,
 			'ExtData' => ''
 			);
-
 		$response = $this->getResponse($url, $params);
 
 
@@ -455,7 +453,6 @@ Configuration::updateValue('SKYBANK_AIM_CHECK_OS', _PS_OS_ERROR_);
 
 	private function forceTransaction($id_order, $cancel = false)
 	{
-
 		$order = new Order((int)$id_order);
 		if (!Validate::isLoadedObject($order))
 			return false;
@@ -473,29 +470,26 @@ Configuration::updateValue('SKYBANK_AIM_CHECK_OS', _PS_OS_ERROR_);
 			'UserName' => Configuration::get('SKYBANK_AIM_USERNAME'),
 			'Password' => Configuration::get('SKYBANK_AIM_PASSWORD'),
 			'TransType' => $cancel ? 'Void' : 'Force',
-			 'CardNum' => '',
-			 'NameOnCard' => '',
-			 'ExpDate' => '',
-			 'InvNum' => (int)$order->invoice_number + 102,
-			 'PNRef' => $pnref,
-			 'Zip' => '',
-			 'Street' => '',
-			 'MagData' => '',
-			 'CVNum' => '',
-			 'Amount' => '',
-			 'ExtData' => ''
+			'CardNum' => '',
+			'NameOnCard' => '',
+			'ExpDate' => '',
+			'InvNum' => (int)$order->invoice_number + 102,
+			'PNRef' => $pnref,
+			'Zip' => '',
+			'Street' => '',
+			'MagData' => '',
+			'CVNum' => '',
+			'Amount' => '',
+			'ExtData' => ''
 			);
-
 		$response = $this->getResponse($url, $params);
 
 
 		if (!$cancel)
 		{
-			$new_trid= $response->PNRef.'|Sale';
+			$new_trid = $response->PNRef.'|Sale';
 			Db::getInstance()->update('order_payment', array('transaction_id' => $new_trid), 'transaction_id = "'. $order_payment[0]->transaction_id.'"');
 		}
-
-
 		if ($response->RespMSG != 'Approved')
 		{
 			$this->_errors[] = $response->Message;
@@ -510,13 +504,10 @@ Configuration::updateValue('SKYBANK_AIM_CHECK_OS', _PS_OS_ERROR_);
 				Tools::redirect($_SERVER['HTTP_REFERER']);
 			}
 		}
-
-
 	}
 
 	public function hookAdminOrder($params)
 	{
-
 		$html = '';
 		$order = new Order($params['id_order']);
 
@@ -658,7 +649,7 @@ Configuration::updateValue('SKYBANK_AIM_CHECK_OS', _PS_OS_ERROR_);
 
 					<form action="" method="POST" class="defaultForm form-horizontal">
 						<div class="form-group">';
-						if (strstr($order_payment[0]->transaction_id, 'Auth') OR (isset($canvoid) && $canvoid)) {
+						if (strstr($order_payment[0]->transaction_id, 'Auth') || (isset($canvoid) && $canvoid)) {
 
 
 							$html .= '
@@ -708,7 +699,7 @@ Configuration::updateValue('SKYBANK_AIM_CHECK_OS', _PS_OS_ERROR_);
 
 					<form action="" method="POST" class="defaultForm form-horizontal">
 						<div class="form-group">';
-						if (strstr($order_payment[0]->transaction_id, 'Auth') OR (isset($canvoid) && $canvoid)) {
+						if (strstr($order_payment[0]->transaction_id, 'Auth') || (isset($canvoid) && $canvoid)) {
 
 
 							$html .= '
@@ -753,7 +744,6 @@ Configuration::updateValue('SKYBANK_AIM_CHECK_OS', _PS_OS_ERROR_);
 
 	public function hookUpdateOrderStatus($params)
 	{
-
 		// if ($params['newOrderStatus']->id ==Configuration::get('PS_OS_CANCELED'))
 		// 	$this->removeReOccurring($params['id_order']);
 
