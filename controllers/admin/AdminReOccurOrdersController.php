@@ -48,9 +48,9 @@ class AdminReOccurOrdersController extends ModuleAdminController
 		CONCAT(LEFT(c.`firstname`, 1), \'. \', c.`lastname`) AS `customer`,
 		osl.`name` AS `osname`,
 		os.`color`,
-		IF((SELECT COUNT(so.id_order) FROM `'._DB_PREFIX_.'orders` so WHERE so.id_customer = a.id_customer) > 1, 0, 1) as new,
+		if ((SELECT COUNT(so.id_order) FROM `'._DB_PREFIX_.'orders` so WHERE so.id_customer = a.id_customer) > 1, 0, 1) as new,
 		country_lang.name as cname,
-		IF(a.valid, 1, 0) badge_success';
+		if (a.valid, 1, 0) badge_success';
 
 		$this->_join = '
 
@@ -418,13 +418,13 @@ class AdminReOccurOrdersController extends ModuleAdminController
 		}
 
 		/* Modify Reoccurring period*/
-		if(Tools::isSubmit('submitAutoship'))
+		if (Tools::isSubmit('submitAutoship'))
 		{
 			$this->module->updateReoccurring(Tools::getValue('id_order'), Tools::getValue('autoship_frequency'));
 			Tools::redirectAdmin(self::$currentIndex.'&id_order='.$order->id.'&vieworder&conf=4&token='.$this->token);
-		} else if(Tools::isSubmit('cancelAutoship'))
+		} else if (Tools::isSubmit('cancelAutoship'))
 		{
-			if(Db::getInstance()->delete('skybankaim_autoship_order','id_order = '.(int)Tools::getValue('id_order')))
+			if (Db::getInstance()->delete('skybankaim_autoship_order', 'id_order = '.(int)Tools::getValue('id_order')))
 				Tools::redirectAdmin(self::$currentIndex.'&conf=4&token='.$this->token);
 		}
 		/* Update shipping number */
@@ -652,8 +652,8 @@ class AdminReOccurOrdersController extends ModuleAdminController
 					{
 						$order_carrier->weight = (float)$order->getTotalWeight();
 						if ($order_carrier->update())
-							$order->weight = sprintf("%.3f ".Configuration::get('PS_WEIGHT_UNIT'), $order_carrier->weight);				
-					}													
+							$order->weight = sprintf('%.3f '.Configuration::get('PS_WEIGHT_UNIT'), $order_carrier->weight);
+					}
 
 					if ($amount > 0)
 					{
@@ -734,7 +734,7 @@ class AdminReOccurOrdersController extends ModuleAdminController
 		/* Cancel product from order */
 		elseif (Tools::isSubmit('cancelProduct') && isset($order))
 		{
-		 	if ($this->tabAccess['delete'] === '1')
+			if ($this->tabAccess['delete'] === '1')
 			{
 				if (!Tools::isSubmit('id_order_detail') && !Tools::isSubmit('id_customization'))
 					$this->errors[] = Tools::displayError('You must select a product.');
@@ -828,7 +828,7 @@ class AdminReOccurOrdersController extends ModuleAdminController
 								{
 									$order_carrier->weight = (float)$order->getTotalWeight();
 									if ($order_carrier->update())
-										$order->weight = sprintf("%.3f ".Configuration::get('PS_WEIGHT_UNIT'), $order_carrier->weight);							
+										$order->weight = sprintf('%.3f '.Configuration::get('PS_WEIGHT_UNIT'), $order_carrier->weight);
 								}
 								Hook::exec('actionProductCancel', array('order' => $order, 'id_order_detail' => (int)$id_order_detail), null, false, true, false, $order->id_shop);
 							}
@@ -2131,9 +2131,9 @@ class AdminReOccurOrdersController extends ModuleAdminController
 		$order_carrier = new OrderCarrier((int)$order->getIdOrderCarrier());
 		if (Validate::isLoadedObject($order_carrier))
 		{
-			$order_carrier->weight = (float)$order->getTotalWeight();	
+			$order_carrier->weight = (float)$order->getTotalWeight();
 			if ($order_carrier->update())
-				$order->weight = sprintf("%.3f ".Configuration::get('PS_WEIGHT_UNIT'), $order_carrier->weight);
+				$order->weight = sprintf('%.3f '.Configuration::get('PS_WEIGHT_UNIT'), $order_carrier->weight);
 		}
 
 		// Update Tax lines
@@ -2358,7 +2358,7 @@ class AdminReOccurOrdersController extends ModuleAdminController
 			$order_carrier->weight = (float)$order->getTotalWeight();
 			$res &= $order_carrier->update();
 			if ($res)
-				$order->weight = sprintf("%.3f ".Configuration::get('PS_WEIGHT_UNIT'), $order_carrier->weight);	
+				$order->weight = sprintf('%.3f '.Configuration::get('PS_WEIGHT_UNIT'), $order_carrier->weight);
 		}
 
 		// Save order invoice
@@ -2476,7 +2476,7 @@ class AdminReOccurOrdersController extends ModuleAdminController
 			$order_carrier->weight = (float)$order->getTotalWeight();
 			$res &= $order_carrier->update();
 			if ($res)
-				$order->weight = sprintf("%.3f ".Configuration::get('PS_WEIGHT_UNIT'), $order_carrier->weight);	
+				$order->weight = sprintf('%.3f '.Configuration::get('PS_WEIGHT_UNIT'), $order_carrier->weight);
 		}
 
 		if (!$res)

@@ -88,8 +88,8 @@ if (Tools::getValue('x_type') == 'check')
 	);
 	$order_status = Configuration::get('SKYBANK_AIM_CHECK_OS');
 }
-else{
-	
+else
+{
 	$error_no = 1;
 	$url = 'https://skybank.payment-gate.net/ws/transact.asmx/ProcessCreditCard';
 	$trx_type = Configuration::get('SKYBANK_AIM_SALE');
@@ -121,9 +121,9 @@ $payment_method = 'SkyBank APM';
 $re_occur = (bool)Configuration::get('SKYBANK_AIM_REOCC');
 
 
-switch ($response->Result) 
+switch ($response->Result)
 {
-	case 0: 
+	case 0:
 		$transaction_id = $response->Message2->AuthCode;
 
 
@@ -172,7 +172,7 @@ switch ($response->Result)
 			'id_customer' => (int)$customer->id,
 			'customerkey' => (int)$customerkey,
 			));
-		} 
+		}
 
 
 
@@ -192,7 +192,7 @@ switch ($response->Result)
 		);
 		$params = array_merge($params_f, $extras);
 		$response = $skybankaim->getResponse($url, $params);
-		if(!empty($response->CcInfoKey))
+		if (!empty($response->CcInfoKey))
 		Db::getInstance()->insert('skybankaim_card', array(
 			'id_customer' => (int)$customer->id,
 			'card_number' => (string)Tools::substr(Tools::safeOutput(Tools::getValue('x_card_num')), -4),
@@ -217,7 +217,7 @@ switch ($response->Result)
 		$skybankaim->validateOrder((int)$cart->id,
 			$order_status, (float)$cart->getOrderTotal(true, Cart::BOTH),
 			$payment_method, $message, $extra_vars, null, false, $customer->secure_key);
-		if($re_occur && Tools::safeOutput(Tools::getValue('x_autoShip')) > 0)
+		if ($re_occur && Tools::safeOutput(Tools::getValue('x_autoShip')) > 0)
 		{
 			Db::getInstance()->insert('skybankaim_autoship_order', array(
 				'id_order'   => (int)$skybankaim->currentOrder,

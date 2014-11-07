@@ -38,8 +38,8 @@ class SkyBankAIM extends PaymentModule
 		$this->bootstrap = true;
 		$this->aim_available_currencies = array('USD','AUD','CAD','EUR','GBP','NZD');
 		$this->tab_class_name    = 'AdminOrders';
-                $this->subtab_class[1]  = 'AdminReOccurOrders';
-                $this->tab_name[1] = 'Re-occuringOrders';
+		$this->subtab_class[1]  = 'AdminReOccurOrders';
+		$this->tab_name[1] = 'Re-occuringOrders';
 
 		parent::__construct();
 
@@ -82,41 +82,41 @@ class SkyBankAIM extends PaymentModule
 	public function install()
 	{
 		self::installSkyBankCustomerTable();
-		return parent::install() &&
-			$this->registerHook('orderConfirmation') &&
-			$this->registerHook('payment') &&
-			$this->registerHook('header') &&
-			$this->registerHook('backOfficeHeader') &&
-			$this->registerHook('adminOrder') &&
-			$this->registerHook('updateOrderStatus') &&
-			$this->registerHook('customerAccount') &&
-			$this->installTab() &&
-			Configuration::updateValue('SKYBANK_AIM_SANDBOX', 1) &&
-			Configuration::updateValue('SKYBANK_AIM_CHECK', 0) &&
-			Configuration::updateValue('SKYBANK_AIM_REOCC', 0) &&
-			Configuration::updateValue('SKYBANK_AIM_CARD_OS', _PS_OS_ERROR_) &&
-			Configuration::updateValue('SKYBANK_AIM_CHECK_OS', _PS_OS_ERROR_);
+return parent::install() &&
+$this->registerHook('orderConfirmation') &&
+$this->registerHook('payment') &&
+$this->registerHook('header') &&
+$this->registerHook('backOfficeHeader') &&
+$this->registerHook('adminOrder') &&
+$this->registerHook('updateOrderStatus') &&
+$this->registerHook('customerAccount') &&
+$this->installTab() &&
+Configuration::updateValue('SKYBANK_AIM_SANDBOX', 1) &&
+Configuration::updateValue('SKYBANK_AIM_CHECK', 0) &&
+Configuration::updateValue('SKYBANK_AIM_REOCC', 0) &&
+Configuration::updateValue('SKYBANK_AIM_CARD_OS', _PS_OS_ERROR_) &&
+Configuration::updateValue('SKYBANK_AIM_CHECK_OS', _PS_OS_ERROR_);
 	}
 	private function installTab()
 	{
 		$id_tab = Tab::getIdFromClassName($this->tab_class_name);
 		$languages = Language::getLanguages();
-                if ($id_tab)
+		if ($id_tab)
 		{
-                	foreach ($this->subtab_class as $k => $sub_tab)
+			foreach ($this->subtab_class as $k => $sub_tab)
 			{
 				$tab = new Tab();
-                                $tab->class_name = $sub_tab;
-                                $tab->id_parent = $id_tab;
-                                $tab->module = $this->name;
-                                foreach ($languages as $language)
-                                        $tab->name[$language['id_lang']] = $this->tab_name[$k];
-                                $tab->add();
-                        }
-                        return true;
-                }
-                return false;
-        }
+				$tab->class_name = $sub_tab;
+				$tab->id_parent = $id_tab;
+				$tab->module = $this->name;
+				foreach ($languages as $language)
+					$tab->name[$language['id_lang']] = $this->tab_name[$k];
+				$tab->add();
+			}
+			return true;
+		}
+		return false;
+	}
 	public function uninstall()
 	{
 		Configuration::deleteByName('SKYBANK_AIM_USERNAME');
@@ -135,56 +135,55 @@ class SkyBankAIM extends PaymentModule
 
 		foreach ($this->subtab_class as $sub_tab)
 		{
-                        $id_tab = Tab::getIdFromClassName($sub_tab);
-                        if ($id_tab)
+			$id_tab = Tab::getIdFromClassName($sub_tab);
+			if ($id_tab)
 			{
-                              $tab = new Tab($id_tab);
-                              $tab->delete();
-                        }
-                }
+				$tab = new Tab($id_tab);
+				$tab->delete();
+			}
+		}
 		return parent::uninstall();
 	}
 	private static function installSkyBankCustomerTable()
 	{
-                Db::getInstance()->execute('DROP TABLE IF EXISTS `'._DB_PREFIX_.'skybankaim_autoship_order`');
-                Db::getInstance()->execute('DROP TABLE IF EXISTS `'._DB_PREFIX_.'skybankaim_customer`');
-                Db::getInstance()->execute('DROP TABLE IF EXISTS `'._DB_PREFIX_.'skybankaim_card`');
+		Db::getInstance()->execute('DROP TABLE IF EXISTS `'._DB_PREFIX_.'skybankaim_autoship_order`');
+		Db::getInstance()->execute('DROP TABLE IF EXISTS `'._DB_PREFIX_.'skybankaim_customer`');
+		Db::getInstance()->execute('DROP TABLE IF EXISTS `'._DB_PREFIX_.'skybankaim_card`');
+		Db::getInstance()->execute('
+			CREATE TABLE `'._DB_PREFIX_.'skybankaim_autoship_order` (
+				`id_order` INT  NOT NULL,
+				`order_name` VARCHAR(64),
+				`frequency` INT NOT NULL,
+				`active` tinyint(1) unsigned NOT NULL DEFAULT 0,
+				`last_run_date` date NOT NULL,
+				INDEX `id_autoship_order` (`id_order`)
+				)  ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;');
 
-                Db::getInstance()->execute('
-                CREATE TABLE `'._DB_PREFIX_.'skybankaim_autoship_order` (
-                        `id_order` INT  NOT NULL,
-                        `order_name` VARCHAR(64),
-                        `frequency` INT NOT NULL,
-                        `active` tinyint(1) unsigned NOT NULL DEFAULT 0,
-                        `last_run_date` date NOT NULL,
-                INDEX `id_autoship_order` (`id_order`)
-                )  ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;');
-
-                Db::getInstance()->execute('
-                CREATE TABLE `'._DB_PREFIX_.'skybankaim_customer` (
-                        `id_customer` INT  NOT NULL,
-                        `customerkey` INT NOT NULL,
-                PRIMARY KEY (`id_customer`, `customerkey`),
-                INDEX `id_customer` (`id_customer`)
-                )  ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;');
+				Db::getInstance()->execute('
+				CREATE TABLE `'._DB_PREFIX_.'skybankaim_customer` (
+						`id_customer` INT  NOT NULL,
+						`customerkey` INT NOT NULL,
+				PRIMARY KEY (`id_customer`, `customerkey`),
+				INDEX `id_customer` (`id_customer`)
+				)  ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;');
 
 		Db::getInstance()->execute('
-                CREATE TABLE `'._DB_PREFIX_.'skybankaim_card` (
-                `id_skybankaim_card` INT NOT NULL AUTO_INCREMENT,
-                `id_customer` INT NOT NULL,
-                `card_number` varchar(4) NOT NULL,
-                `card_brand` varchar(32) NOT NULL,
-                `card_expiration` varchar(32) NOT NULL,
-                `card_holder` varchar(64) NOT NULL,
-                `ccinfokey` INT NOT NULL,
-                PRIMARY KEY (`id_skybankaim_card`),
-                INDEX `id_customer` (`id_customer`)
-                ) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;');
-        }
+				CREATE TABLE `'._DB_PREFIX_.'skybankaim_card` (
+				`id_skybankaim_card` INT NOT NULL AUTO_INCREMENT,
+				`id_customer` INT NOT NULL,
+				`card_number` varchar(4) NOT NULL,
+				`card_brand` varchar(32) NOT NULL,
+				`card_expiration` varchar(32) NOT NULL,
+				`card_holder` varchar(64) NOT NULL,
+				`ccinfokey` INT NOT NULL,
+				PRIMARY KEY (`id_skybankaim_card`),
+				INDEX `id_customer` (`id_customer`)
+				) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;');
+		}
 	public function hookCustomerAccount($params)
-        {
+		{
 		return $this->display(__FILE__, 'views/templates/hook/my-account.tpl');
-        }
+		}
 	public function hookOrderConfirmation($params)
 	{
 		if ($params['objOrder']->module != $this->name)
@@ -262,10 +261,7 @@ class SkyBankAIM extends PaymentModule
 			'SKYBANK_AIM_CARD_AX' => Configuration::get('SKYBANK_AIM_CARD_AX'),
 			'SKYBANK_AIM_CARD_OS' => (int)Configuration::get('SKYBANK_AIM_CARD_OS'),
 			'SKYBANK_AIM_CHECK_OS' => (int)Configuration::get('SKYBANK_AIM_CHECK_OS'),
-
 		));
-
-
 		if (version_compare(_PS_VERSION_, '1.6', '>=') )
 			return $this->context->smarty->fetch(dirname(__FILE__).'/views/templates/admin/configuration.tpl');
 		else
@@ -305,10 +301,7 @@ class SkyBankAIM extends PaymentModule
 			$this->context->smarty->assign('reocc', (bool)Configuration::get('SKYBANK_AIM_REOCC'));
 			$this->context->smarty->assign('currency', $currency);
 			$this->context->smarty->assign('savedcards', Customer::getSkyBankCards($this->context->cookie->id_customer));
-
-
 			// check the address, disable autoship for non-us addresses
-			
 			$address = Address::getCountryAndState($this->context->cart->id_address_invoice);
 			if ($address['id_country'] != 21) { // US is supposed to be 21
 				$this->context->smarty->assign(array(
@@ -430,23 +423,23 @@ class SkyBankAIM extends PaymentModule
 			'UserName' => Configuration::get('SKYBANK_AIM_USERNAME'),
 			'Password' => Configuration::get('SKYBANK_AIM_PASSWORD'),
 			'TransType' => 'Return',
-			 'CardNum' => '',
-			 'NameOnCard' => '',
-			 'ExpDate' => '',
-			 'InvNum' => (int)$order->invoice_number +102,
-			 'PNRef' => $pnref,
-			 'Zip' => '',
-			 'Street' => '',
-			 'MagData' => '',
-			 'CVNum' => '',
-			 'Amount' => $order->total_paid_real,
-			 'ExtData' => ''
+			'CardNum' => '',
+			'NameOnCard' => '',
+			'ExpDate' => '',
+			'InvNum' => (int)$order->invoice_number + 102,
+			'PNRef' => $pnref,
+			'Zip' => '',
+			'Street' => '',
+			'MagData' => '',
+			'CVNum' => '',
+			'Amount' => $order->total_paid_real,
+			'ExtData' => ''
 			);
-		
+
 		$response = $this->getResponse($url, $params);
 
 
-		if($response->RespMSG == 'Approved')
+		if ($response->RespMSG == 'Approved')
 		{
 			$history = new OrderHistory();
 			$history->id_order = (int)$id_order;
@@ -457,7 +450,7 @@ class SkyBankAIM extends PaymentModule
 		}
 		else
 			$this->_errors[] = $response->Message;
-	}	
+	}
 
 
 	private function forceTransaction($id_order, $cancel = false)
@@ -483,7 +476,7 @@ class SkyBankAIM extends PaymentModule
 			 'CardNum' => '',
 			 'NameOnCard' => '',
 			 'ExpDate' => '',
-			 'InvNum' => (int)$order->invoice_number +102,
+			 'InvNum' => (int)$order->invoice_number + 102,
 			 'PNRef' => $pnref,
 			 'Zip' => '',
 			 'Street' => '',
@@ -492,22 +485,22 @@ class SkyBankAIM extends PaymentModule
 			 'Amount' => '',
 			 'ExtData' => ''
 			);
-		
+
 		$response = $this->getResponse($url, $params);
 
 
-		if(!$cancel)
+		if (!$cancel)
 		{
 			$new_trid= $response->PNRef.'|Sale';
 			Db::getInstance()->update('order_payment', array('transaction_id' => $new_trid), 'transaction_id = "'. $order_payment[0]->transaction_id.'"');
 		}
 
 
-		if($response->RespMSG != 'Approved')
+		if ($response->RespMSG != 'Approved')
 		{
 			$this->_errors[] = $response->Message;
 		} else {
-			if($cancel)
+			if ($cancel)
 			{
 				$history = new OrderHistory();
 				$history->id_order = (int)$id_order;
@@ -517,93 +510,93 @@ class SkyBankAIM extends PaymentModule
 				Tools::redirect($_SERVER['HTTP_REFERER']);
 			}
 		}
-	
-			
-	}	
+
+
+	}
 
 	public function hookAdminOrder($params)
-    {
+	{
 
-    	$html = '';
-        $order = new Order($params['id_order']);
+		$html = '';
+		$order = new Order($params['id_order']);
 
-        if(!Validate::isLoadedObject($order))
-        	return;
+		if (!Validate::isLoadedObject($order))
+			return;
 
-        $order_payment = OrderPayment::getByOrderReference($order->reference);
+		$order_payment = OrderPayment::getByOrderReference($order->reference);
 
 
-        if (Tools::isSubmit('submitRefund')) {
+		if (Tools::isSubmit('submitRefund')) {
 
-        	$pnref = str_replace('|Sale', '', $order_payment[0]->transaction_id);
+			$pnref = str_replace('|Sale', '', $order_payment[0]->transaction_id);
 			$pnref = str_replace('|Auth', '', $pnref);
-    		$url = 'https://skybank.payment-gate.net/ws/transact.asmx/ProcessCreditCard';
+			$url = 'https://skybank.payment-gate.net/ws/transact.asmx/ProcessCreditCard';
 			$params = array(
 				'UserName' => Configuration::get('SKYBANK_AIM_USERNAME'),
 				'Password' => Configuration::get('SKYBANK_AIM_PASSWORD'),
 				'TransType' => 'Return',
-				 'CardNum' => '',
-				 'NameOnCard' => '',
-				 'ExpDate' => '',
-				 'InvNum' => (int)$order->invoice_number +102,
-				 'PNRef' => $pnref,
-				 'Zip' => '',
-				 'Street' => '',
-				 'MagData' => '',
-				 'CVNum' => '',
-				 'Amount' => (int)Tools::getValue('refund_amount'),
-				 'ExtData' => ''
+				'CardNum' => '',
+				'NameOnCard' => '',
+				'ExpDate' => '',
+				'InvNum' => (int)$order->invoice_number + 102,
+				'PNRef' => $pnref,
+				'Zip' => '',
+				'Street' => '',
+				'MagData' => '',
+				'CVNum' => '',
+				'Amount' => (int)Tools::getValue('refund_amount'),
+				'ExtData' => ''
 				);
-			
+
 			$response = $this->getResponse($url, $params);
 			$currency = new Currency($order->id_currency);
-			if($response->RespMSG == 'Approved')
+			if ($response->RespMSG == 'Approved')
 				$html .= $this->displayConfirmation($this->l('You refunded') . ' ' . Tools::displayPrice((int)Tools::getValue('refund_amount'), $currency) . ' ' . $this->l('Make sure you use the partial refund button above to fix the amount of this Prestashop Order'));
 			else
 				$html .= $this->displayError($response->Message);
-        } else if(Tools::isSubmit('submitFullRefund'))
-        {
-        	$this->totalRefund($order->id);
-        	if(!$this->_errors)
-        		$html .= $this->displayConfirmation($this->l('Transaction completely refunded'));
-        }  else if(Tools::isSubmit('SubmitForce'))
-        {
-        	$this->forceTransaction($order->id);
-        	if(!$this->_errors)
-        		Tools::redirect($_SERVER['HTTP_REFERER']);
-        } else if(Tools::isSubmit('submitCancel'))
-        {
-        	$this->forceTransaction($order->id, true);
+		} else if (Tools::isSubmit('submitFullRefund'))
+		{
+			$this->totalRefund($order->id);
+			if (!$this->_errors)
+				$html .= $this->displayConfirmation($this->l('Transaction completely refunded'));
+		}  else if (Tools::isSubmit('SubmitForce'))
+		{
+			$this->forceTransaction($order->id);
+			if (!$this->_errors)
+				Tools::redirect($_SERVER['HTTP_REFERER']);
+		} else if (Tools::isSubmit('submitCancel'))
+		{
+			$this->forceTransaction($order->id, true);
 
-        	if(!$this->_errors)
-        		$html .= $this->displayConfirmation($this->l('Transaction canceled'));
-        }
-        	if($this->_errors)
-        		$html .= $this->displayError(implode($this->_errors, '<br />'));
+			if (!$this->_errors)
+				$html .= $this->displayConfirmation($this->l('Transaction canceled'));
+		}
+			if ($this->_errors)
+				$html .= $this->displayError(implode($this->_errors, '<br />'));
 
-        if(Configuration::get('EPAY_ENABLE_PAYMENTREQUEST') == 1 && ($order->total_paid - $order->getTotalPaid()) > 0)
-        {
-            if (Tools::isSubmit('sendpaymentrequest'))
-                $html .= $this->createPaymentRequest(
-                    $order,
-                    $params['id_order'],
-                    Tools::getValue('epay_paymentrequest_amount'),
-                    $this->context->currency->iso_code,
-                    Tools::getValue('epay_paymentrequest_requester_name'),
-                    Tools::getValue('epay_paymentrequest_requester_comment'),
-                    Tools::getValue('epay_paymentrequest_recipient_email'),
-                    Tools::getValue('epay_paymentrequest_recipient_name'),
-                    Tools::getValue('epay_paymentrequest_replyto_email'),
-                    Tools::getValue('epay_paymentrequest_replyto_name')
-                );
-        	$html .= $this->displayPaymentRequestForm($params).'<br>';
-        }
+		if (Configuration::get('EPAY_ENABLE_PAYMENTREQUEST') == 1 && ($order->total_paid - $order->getTotalPaid()) > 0)
+		{
+			if (Tools::isSubmit('sendpaymentrequest'))
+				$html .= $this->createPaymentRequest(
+					$order,
+					$params['id_order'],
+					Tools::getValue('epay_paymentrequest_amount'),
+					$this->context->currency->iso_code,
+					Tools::getValue('epay_paymentrequest_requester_name'),
+					Tools::getValue('epay_paymentrequest_requester_comment'),
+					Tools::getValue('epay_paymentrequest_recipient_email'),
+					Tools::getValue('epay_paymentrequest_recipient_name'),
+					Tools::getValue('epay_paymentrequest_replyto_email'),
+					Tools::getValue('epay_paymentrequest_replyto_name')
+				);
+			$html .= $this->displayPaymentRequestForm($params).'<br>';
+		}
 
 
-        //  check if the transaction is in the batch, if it is, display refund, otherwise void
-		
+		//  check if the transaction is in the batch, if it is, display refund, otherwise void
 
-		$check_url = 'https://skybank.payment-gate.net/paygate/ws/trxdetail.asmx/GetCardTrx';	
+
+		$check_url = 'https://skybank.payment-gate.net/paygate/ws/trxdetail.asmx/GetCardTrx';
 		$pnref = str_replace('|Sale', '', $order_payment[0]->transaction_id);
 		$pnref = str_replace('|Auth', '', $pnref);
 		$params = array(
@@ -635,34 +628,34 @@ class SkyBankAIM extends PaymentModule
 			'RowDelim' => '',
 			'IncludeHeader' => '',
 			'ExtData' => '',
-			'InvNum' => (int)$order->invoice_number +102,
+			'InvNum' => (int)$order->invoice_number + 102,
 			'PNRef' => $pnref,
 			);
 		$response = $this->getResponse($check_url, $params);
 		$realresponse = new SimpleXMLElement($response[0]);
 		//Test gateway settlement response
 		// echo "<pre>";
-		 //var_dump($realresponse->TrxDetailCard->Settle_Flag_CH);
-		 //echo "</pre>";
-		if($realresponse->TrxDetailCard->Settle_Flag_CH == 0)
+		//var_dump($realresponse->TrxDetailCard->Settle_Flag_CH);
+		//echo "</pre>";
+		if ($realresponse->TrxDetailCard->Settle_Flag_CH == 0)
 			$canvoid = true;
 		else $canvoid = false;
 
-		 
-        
+
+
 
 		if (version_compare(_PS_VERSION_, '1.6', '>='))
 		{
 
 
 
-	        $html .= '
-	        <div class="col-lg-7">
+			$html .= '
+			<div class="col-lg-7">
 
 
-		        <div class="panel">
-		        	<div class="panel-heading"><img width="32" src="../modules/'.$this->name.'/logo.gif"> SkyBank Info</div>
-		        
+				<div class="panel">
+					<div class="panel-heading"><img width="32" src="../modules/'.$this->name.'/logo.gif"> SkyBank Info</div>
+
 					<form action="" method="POST" class="defaultForm form-horizontal">
 						<div class="form-group">';
 						if (strstr($order_payment[0]->transaction_id, 'Auth') OR (isset($canvoid) && $canvoid)) {
@@ -670,49 +663,49 @@ class SkyBankAIM extends PaymentModule
 
 							$html .= '
 								<div class="col-lg-2" style="width:213px">
-									<input type="submit" class="btn btn-default" name="submitCancel" value="'.$this->l('Void').'"'.(strstr($order_payment[0]->transaction_id, 'Auth') ? 'disabled' : '').'/>	
-									
+									<input type="submit" class="btn btn-default" name="submitCancel" value="'.$this->l('Void').'"'.(strstr($order_payment[0]->transaction_id, 'Auth') ? 'disabled' : '').'/>
+
 									'.(strstr($order_payment[0]->transaction_id, 'Auth') ? '<input type="submit" class="btn btn-default" name="SubmitForce" value="Capture Transaction"/>' : '').'
 								</div>';
-								$html .= '<p>'; if (strstr($order_payment[0]->transaction_id, 'Auth')){ $html .='You must first capture to void or refund</p>';}
+								$html .= '<p>'; if (strstr($order_payment[0]->transaction_id, 'Auth')){ $html .= 'You must first capture to void or refund</p>';}
 
 						} else {
-							$html .='<label class="control-label col-lg-2" style="width:200px">
+							$html .= '<label class="control-label col-lg-2" style="width:200px">
 							'.$this->l('Amount to refund:').'
 							</label>
 							<div class="col-lg-3">
-								 <input type="text" name="refund_amount" value=""/>	
+								 <input type="text" name="refund_amount" value=""/>
 							</div>
 							<div class="col-lg-2" style="width:61px">
 								<input class="btn btn-default" type="submit" name="submitRefund" value="Submit" />
-							</div>	
+							</div>
 							<div class="col-lg-2" style="width:120x">
-								<input type="submit" class="btn btn-default" name="submitFullRefund" value="Full Refund"/>	
-								
+								<input type="submit" class="btn btn-default" name="submitFullRefund" value="Full Refund"/>
+
 							</div>';
 						}
-						$html .='
-							
+						$html .= '
+
 						</div>
 
 
-				    </form>
+					</form>
 				</div>
 
-	        </div>
-	        ';
+			</div>
+			';
 
 		} else {
 
 
 
-	        $html .= '
-	        <br/>
-	        <fieldset>
+			$html .= '
+			<br/>
+			<fieldset>
 
 
-		        <legend><img width="32" src="../modules/'.$this->name.'/logo.gif"> SkyBank Info</legend>
-		        
+				<legend><img width="32" src="../modules/'.$this->name.'/logo.gif"> SkyBank Info</legend>
+
 					<form action="" method="POST" class="defaultForm form-horizontal">
 						<div class="form-group">';
 						if (strstr($order_payment[0]->transaction_id, 'Auth') OR (isset($canvoid) && $canvoid)) {
@@ -721,50 +714,47 @@ class SkyBankAIM extends PaymentModule
 							$html .= '
 								<div class="col-lg-2" style="width:213px">
 									<input type="submit" class="button" name="submitCancel" value="'.$this->l('Void').'"/>
-
-								
-							
 								'.(strstr($order_payment[0]->transaction_id, 'Auth') ? '<input type="submit" class="button" name="SubmitForce" value="Settle Transaction"/>' : '').'
 								</div>';
 
 						} else {
-							$html .='<label class="control-label col-lg-2" style="width:200px">
+							$html .= '<label class="control-label col-lg-2" style="width:200px">
 							'.$this->l('Amount to refund:').'
 							</label>
 							<div class="col-lg-3">
-								 <input type="text" name="refund_amount" value=""/>	
+								 <input type="text" name="refund_amount" value=""/>
 							</div>
 							<div class="col-lg-2" style="width:61px">
 								<input class="button" type="submit" name="submitRefund" value="Submit" />
-							</div>	
+							</div>
 							<div class="col-lg-2" style="width:213px">
-								<input type="submit" class="button" name="submitFullRefund" value="Full Refund"/>	
-								
+								<input type="submit" class="button" name="submitFullRefund" value="Full Refund"/>
+
 							</div>';
 						}
-						$html .='
-							
+						$html .= '
+
 						</div>
 
 
-				    </form>
-				
+					</form>
 
-	        </fieldset>
-	        <br/>
-	        ';
+
+			</fieldset>
+			<br/>
+			';
 		}
 
 
 
 
-        return $html;
+		return $html;
 	}
 
 	public function hookUpdateOrderStatus($params)
-	{		
+	{
 
-		// if($params['newOrderStatus']->id ==Configuration::get('PS_OS_CANCELED'))
+		// if ($params['newOrderStatus']->id ==Configuration::get('PS_OS_CANCELED'))
 		// 	$this->removeReOccurring($params['id_order']);
 
 	}
