@@ -35,11 +35,11 @@ class SkyBankAIM extends PaymentModule
 		$this->tab = 'payments_gateways';
 		$this->version = '1.0.0';
 		$this->author = 'SkyBank';
-		$this->module_key = "f37280b7ce05ebcd65a20c26baeb654a"
+		$this->module_key = "f37280b7ce05ebcd65a20c26baeb654a";
 		$this->bootstrap = true;
 		$this->aim_available_currencies = array('USD','AUD','CAD','EUR','GBP','NZD');
-		$this->tab_class_name    = 'AdminOrders';
-		$this->subtab_class[1]  = 'AdminReOccurOrders';
+		$this->tab_class_name = 'AdminOrders';
+		$this->subtab_class[1] = 'AdminReOccurOrders';
 		$this->tab_name[1] = 'Re-occuringOrders';
 
 		parent::__construct();
