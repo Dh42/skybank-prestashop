@@ -40,7 +40,7 @@ class SkyBankAIM extends PaymentModule
 		$this->aim_available_currencies = array('USD','AUD','CAD','EUR','GBP','NZD');
 		$this->tab_class_name = 'AdminOrders';
 		$this->subtab_class[1] = 'AdminReOccurOrders';
-		$this->tab_name[1] = 'Re-occuringOrders';
+		$this->tab_name[1] = 'Auto-Ship Orders';
 
 		parent::__construct();
 
