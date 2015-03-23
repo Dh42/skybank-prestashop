@@ -32,7 +32,7 @@ $skybankaim = new SkyBankAIM();
 if (Tools::getValue('token'))
 {
 	$secureKey = md5(_COOKIE_KEY_.Configuration::get('PS_SHOP_NAME'));
-	if (!empty($secureKey) && $secureKey == Tools::getValue('token'))
+	if (!empty($secureKey) && $secureKey == $_GET['token'])
 	{
 		$orders = AutoShipOrders::getAllOrders();
 		$orderStatus = Configuration::get('SKYBANK_AIM_CARD_OS');
@@ -44,7 +44,7 @@ echo 'Autoship Order #'.$order['id_order'].'<br>';
 			$cart = $duplication['cart'];
 			Context::getContext()->currency = new Currency((int)$cart->id_currency);
 			Context::getContext()->customer = new Customer((int)$cart->id_customer);
-			$CCInfoKey = AutoShipOrders::getCCInfoKey((int)$order['id_customer']);
+			$CCInfoKey = AutoShipOrders::getCCInfoKey((int)$order['id_customer']); 
 			$url = 'https://skybank.payment-gate.net/paygate/ws/recurring.asmx/ProcessCreditCard';
 			$params = array(
 				'UserName' => Configuration::get('SKYBANK_AIM_USERNAME'),
@@ -52,7 +52,7 @@ echo 'Autoship Order #'.$order['id_order'].'<br>';
 				'Vendor' => (int)Configuration::get('SKYBANK_AIM_VENDOR'),
 				'CCInfoKey' => $CCInfoKey,
 				'Amount' => (float)$cart->getOrderTotal(true, Cart::BOTH),
-				'InvNum' => (int)$cart->id,
+				'InvNum' => (int)$cart->id, 
 				'ExtData' => '',
 			);
 			$response = $skybankaim->getResponse($url, $params);
@@ -73,8 +73,8 @@ echo 'Autoship Order #'.$order['id_order'].'<br>';
 					);
 			if ($skybankaim->currentOrder)
 			{
-				Db::getInstance()->insert('skybankaim_re_order', array('id_order'   => (int)$skybankaim->currentOrder));
-				Db::getInstance()->update('skybankaim_autoship_order', array('last_run_date' => date('Y-m-d')), 'id_order = '.(int)$order['id_order']);
+				Db::getInstance()->insert('skybankaim_re_order', array('id_order'   => (int)$skybankaim->currentOrder)); 	
+				Db::getInstance()->update('skybankaim_autoship_order', array('last_run_date' => date('Y-m-d')), 'id_order = '.(int)$order['id_order']);	
 			}
 		}
 	}
