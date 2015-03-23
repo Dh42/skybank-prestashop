@@ -2,7 +2,7 @@
 <module>
 	<name>skybankaim</name>
 	<displayName><![CDATA[SkyBank Advanced Payment Module]]></displayName>
-	<version><![CDATA[1.0.1]]></version>
+	<version><![CDATA[1.1.0]]></version>
 	<description><![CDATA[Accept Credit, Debit, and ACH Payments Online With An Optional Subscription Feature Today!]]></description>
 	<author><![CDATA[SkyBank]]></author>
 	<tab><![CDATA[payments_gateways]]></tab>
