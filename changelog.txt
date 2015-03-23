@@ -1,0 +1,10 @@
+Release Notes for 1.1.0 Skybankaim
+#########################
+Compatible with up to 1.6.0.14
+#########################
+Fixed Bugs: None
+#########################
+Improvements:
+Added an alert box on issuing voids
+Added the ability to capture a different than authorized
+Changed autoship to subscription through out the module
